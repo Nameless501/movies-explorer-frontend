@@ -1,0 +1,14 @@
+export const PORTFOLIO_LINKS = [
+    {
+        text: 'Статичный сайт',
+        url: 'https://github.com/Nameless501/how-to-learn',
+    },
+    {
+        text: 'Адаптивный сайт',
+        url: 'https://github.com/Nameless501/russian-travel',
+    },
+    {
+        text: 'Одностраничное приложение',
+        url: 'https://github.com/Nameless501/react-mesto-api-full',
+    },
+]
