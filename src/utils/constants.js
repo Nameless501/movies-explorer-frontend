@@ -11,4 +11,6 @@ export const PORTFOLIO_LINKS = [
         text: 'Одностраничное приложение',
         url: 'https://github.com/Nameless501/react-mesto-api-full',
     },
-]
+];
+
+export const BASE_API_URL = 'https://api.nomoreparties.co';

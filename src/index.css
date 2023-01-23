@@ -6,6 +6,7 @@ body {
     /* colors variables */
 
     --colors_bg_main: #FFFFFF;
+    --colors_bg_card: #FDFDFD;
     --colors_bg_accent_purple: #F3C1F8;
     --colors_bg_accent_gray: #F5F5F5;
     --colors_bg_accent_lightGray: #F2F2F2;
