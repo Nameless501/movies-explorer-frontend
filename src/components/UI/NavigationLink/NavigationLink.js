@@ -1,11 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import './NavigationLink.css';
 
-function NavigationLink({ to, text }) {
+function NavigationLink({ to, text, place }) {
     return (
         <NavLink
             to={to}
-            className='navigation-link'
+            className={`
+                navigation-link
+                ${ place ? 'navigation-link_place_' + place : null }
+            `}
             activeClassName="navigation-link_active"
         >
             {text}

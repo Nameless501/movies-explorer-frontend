@@ -1,6 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 import { routesConfig } from '../../utils/configs';
 import LandingPage from '../pages/Landing/LandingPage';
+import MoviesPage from '../pages/Movies/MoviesPage';
 import './App.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
                     <LandingPage />
                 </Route>
                 <Route path={routesConfig.movies}>
-
+                    <MoviesPage />
                 </Route>
                 <Route path={routesConfig.savedMovies}>
 

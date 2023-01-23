@@ -8,5 +8,12 @@
     padding: 0;
     list-style: none;
     display: flex;
+}
+
+.navigation-bar__links-list_place_main {
+    gap: 16px;
+}
+
+.navigation-bar__links-list_place_landing {
     gap: 20px;
 }

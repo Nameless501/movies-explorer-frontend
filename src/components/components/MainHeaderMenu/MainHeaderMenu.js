@@ -1,20 +1,20 @@
 import NavigationBar from '../NavigationBar/NavigationBar';
 import ProfileButton from '../../UI/ProfileButton/ProfileButton';
 import BurgerButton from '../../UI/BurgerButton/BurgerButton';
-import './LandingHeaderMenu.css';
+import './MainHeaderMenu.css';
 
-function LandingHeaderMenu() {
+function MainHeaderMenu() {
     return (
-        <div className='header-menu-landing'>
-            <div className='header-menu-landing__desktop-wrapper'>
-                <NavigationBar place='landing' />
+        <div className='header-menu-main'>
+            <div className='header-menu-main__desktop-wrapper'>
+                <NavigationBar place='main' />
                 <ProfileButton />
             </div>
-            <div className='header-menu-landing__mobile-wrapper'>
+            <div className='header-menu-main__mobile-wrapper'>
                 <BurgerButton />
             </div>
         </div>
     );
 }
 
-export default LandingHeaderMenu;
+export default MainHeaderMenu;

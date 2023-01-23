@@ -1,0 +1,23 @@
+.header-landing {
+    margin: 0;
+    padding: 18px 70px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--colors_bg_main);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 44px;
+}
+
+@media screen and (max-width: 1023px) {
+    .header-landing {
+        padding: 18px 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .header-landing {
+        padding: 18px 14px;
+    }
+}
