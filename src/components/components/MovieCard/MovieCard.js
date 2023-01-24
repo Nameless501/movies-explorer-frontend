@@ -2,7 +2,7 @@ import MovieCardButton from '../../UI/MovieCardButton/MovieCardButton';
 import { BASE_API_URL } from '../../../utils/constants';
 import './MovieCard.css';
 
-function MovieCard({ nameRU, duration, image }) {
+function MovieCard({ nameRU, duration, image, typeSaved, typeDelete }) {
     return (
         <div className='movie-card' >
             <figure className='movie-card__figure' >
@@ -27,7 +27,10 @@ function MovieCard({ nameRU, duration, image }) {
                     className='movie-card__picture'
                 />
             </figure>
-            <MovieCardButton />
+            <MovieCardButton
+                typeSaved={typeSaved}
+                typeDelete={typeDelete}
+            />
         </div>
     );
 }

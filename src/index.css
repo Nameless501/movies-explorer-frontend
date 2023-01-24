@@ -28,6 +28,7 @@ body {
     --fonts_colors_main: #000000;
     --fonts_colors_fade: #A0A0A0;
     --fonts_colors_btn: #FFFFFF;
+    --fonts_colors_error: #FF4062;
 
     /* global styles */
 

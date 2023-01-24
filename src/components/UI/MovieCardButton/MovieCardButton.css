@@ -16,3 +16,18 @@
     cursor: pointer;
     opacity: 0.8;
 }
+
+.card-button_type_saved {
+    background-color: var(--colors_btn_crimson);
+    background-image: url('../../../images/icon_btn_saved.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 8px 5px;
+}
+
+.card-button_type_delete {
+    background-image: url('../../../images/icon_btn_delete.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 7px 7px;
+}

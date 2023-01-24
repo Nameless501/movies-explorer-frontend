@@ -6,7 +6,10 @@ import './SavedMovies.css';
 function SavedMovies() {
     return (
         <section className='saved-movies'>
-            <MoviesList moviesList={moviesList} />
+            <MoviesList
+                moviesList={moviesList}
+                isSavedMoviesPage={true}
+            />
             {/* <Preloader /> */}
         </section>
     );
