@@ -9,6 +9,7 @@
     font-size: 12px;
     line-height: 16px;
     background-color: transparent;
+    text-decoration: none;
 }
 
 .sign-button:hover {

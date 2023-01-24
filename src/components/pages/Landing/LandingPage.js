@@ -8,14 +8,16 @@ import './LandingPage.css';
 
 function LandingPage() {
     return (
-        <main className='landing-page'>
+        <div className='landing-page'>
             <HeaderLanding />
-            <HeroSection />
-            <AboutSection />
-            <TechSection />
-            <StudentSection />
+            <main className='landing-page__content'>
+                <HeroSection />
+                <AboutSection />
+                <TechSection />
+                <StudentSection />
+            </main>
             <Footer />
-        </main>
+        </div>
     );
 }
 

@@ -1,16 +1,17 @@
+import { Link } from 'react-router-dom';
 import './SignButton.css';
 
-function SignButton({ classType, text }) {
+function SignButton({ classType, text, to='/' }) {
     return (
-        <button
-            type='button'
+        <Link
+            to={to}
             className={`
                 sign-button
                 ${classType ? 'sign-button_type_' + classType : null}
             `}
         >
             {text}
-        </button>
+        </Link>
     );
 }
 

@@ -28,6 +28,11 @@
     line-height: 27px;
 }
 
+.navigation-link_place_not-found {
+    font-size: 14px;
+    line-height: 17px;
+}
+
 .navigation-link:hover {
     cursor: pointer;
     opacity: .8;
@@ -43,6 +48,13 @@
         font-size: 22px;
         line-height: 27px;
         border-bottom: 2px solid var(--fonts_colors_main);
+    }
+
+    .navigation-link_place_not-found {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        border: 0;
     }
 }
 

@@ -6,12 +6,14 @@ import './MoviesPage.css';
 
 function MoviesPage() {
     return (
-        <main className='movies-page'>
+        <div className='movies-page' >
             <HeaderMain />
-            <MoviesSearch />
-            <Movies />
+            <main className='movies-page__content' >
+                <MoviesSearch />
+                <Movies />
+            </main>
             <Footer />
-        </main>
+        </div>
     );
 }
 

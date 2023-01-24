@@ -30,6 +30,17 @@
     padding: 15px;
 }
 
+.text-input_place_profile {
+    width: 70%;
+    padding: 0;
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    border-radius: 0;
+    text-align: end;
+}
+
 .text-input_state_error {
     color: var(--fonts_colors_error);
 }

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import SignButton from '../../UI/SignButton/SignButton';
 import { routesConfig } from '../../../utils/configs';
 import './AuthMenu.css';
@@ -8,20 +7,18 @@ function AuthMenu() {
         <nav className='auth-menu' >
             <ul className='auth-menu__buttons' >
                 <li>
-                    <Link to={routesConfig.signIn} >
-                        <SignButton
-                            classType='sign-in'
-                            text='Регистрация'
-                        />
-                    </Link>
+                    <SignButton
+                        classType='sign-in'
+                        text='Регистрация'
+                        to={routesConfig.signUp}
+                    />
                 </li>
                 <li>
-                    <Link to={routesConfig.signUp} >
-                        <SignButton
-                            classType='sign-up'
-                            text='Войти'
-                        />
-                    </Link>
+                    <SignButton
+                        classType='sign-up'
+                        text='Войти'
+                        to={routesConfig.signIn}
+                    />
                 </li>
             </ul>
         </nav>

@@ -14,3 +14,7 @@ export const PORTFOLIO_LINKS = [
 ];
 
 export const BASE_API_URL = 'https://api.nomoreparties.co';
+
+export const CURRENT_USER_NAME = 'Евгений';
+
+export const CURRENT_USER_EMAIL = 'test@email.com';

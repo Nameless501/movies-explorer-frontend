@@ -6,12 +6,14 @@ import './SavedMoviesPage.css';
 
 function SavedMoviesPage() {
     return (
-        <main className='saved-movies-page'>
+        <div className='saved-movies-page' >
             <HeaderMain />
-            <MoviesSearch />
-            <SavedMovies />
+            <main className='saved-movies-page__content' >
+                <MoviesSearch />
+                <SavedMovies />
+            </main>
             <Footer />
-        </main>
+        </div>
     );
 }
 

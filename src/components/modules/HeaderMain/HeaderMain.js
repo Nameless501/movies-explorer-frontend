@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import AuthMenu from '../../components/AuthMenu/AuthMenu';
 import MainHeaderMenu from '../../components/MainHeaderMenu/MainHeaderMenu';
 import Logo from '../../UI/Logo/Logo';
 import './HeaderMain.css';
 
 function HeaderMain() {
+    const [isLoggedIn, setLoggedState] = useState(true);
+
     return (
-        <header className='header-landing'>
+        <header className='header-main'>
             <Logo />
-            {/* <AuthMenu /> */}
-            <MainHeaderMenu />
+            {isLoggedIn ?
+                <MainHeaderMenu />
+                :
+                <AuthMenu />
+            }
         </header>
     );
 }
