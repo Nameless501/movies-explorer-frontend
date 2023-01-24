@@ -2,6 +2,7 @@ import { Switch, Route } from 'react-router-dom';
 import { routesConfig } from '../../utils/configs';
 import LandingPage from '../pages/Landing/LandingPage';
 import MoviesPage from '../pages/Movies/MoviesPage';
+import SavedMoviesPage from '../pages/SavedMovies/SavedMoviesPage';
 import './App.css';
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
                     <MoviesPage />
                 </Route>
                 <Route path={routesConfig.savedMovies}>
-
+                    <SavedMoviesPage />
                 </Route>
                 <Route path={routesConfig.profile}>
 

@@ -61,3 +61,41 @@
     object-position: center;
     object-fit: cover;
 }
+
+@media screen and (max-width: 1023px) {
+    .movie-card__caption {
+        gap: 10px;
+    }
+
+    .movie-card__picture {
+        height: 190px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .movie-card {
+        padding: 14px 0;
+        gap: 14px;
+    }
+
+    .movie-card__figure {
+        gap: 14px;
+    }
+
+    .movie-card__caption {
+        padding: 0 14px;
+    }
+
+    .movie-card__title {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .movie-card__duration {
+        font-size: 10px;
+    }
+
+    .movie-card__picture {
+        height: 168px;
+    }
+}

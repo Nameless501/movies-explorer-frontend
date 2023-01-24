@@ -1,17 +1,15 @@
-import moviesList from '../../../utils/moviesList.json';
+import moviesList from '../../../utils/savedMoviesList.json';
 import MoviesList from '../../components/MoviesList/MoviesList';
-import MoreButton from '../../UI/MoreButton/MoreButton';
 import Preloader from '../../UI/Preloader/Preloader';
-import './Movies.css';
+import './SavedMovies.css';
 
-function Movies() {
+function SavedMovies() {
     return (
-        <section className='movies'>
+        <section className='saved-movies'>
             <MoviesList moviesList={moviesList} />
-            <MoreButton />
             {/* <Preloader /> */}
         </section>
     );
 }
 
-export default Movies;
+export default SavedMovies;
