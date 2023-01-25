@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.4ed84ac9.css",
-    "main.js": "/static/js/main.c1a6f885.js",
-    "static/media/Inter-Bold.woff?v=3.19": "/static/media/Inter-Bold.93c1301bd9f486c573b3.woff",
-    "static/media/Inter-SemiBold.woff?v=3.19": "/static/media/Inter-SemiBold.cca62d21c8c555c392e5.woff",
-    "static/media/Inter-Medium.woff?v=3.19": "/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
-    "static/media/Inter-Regular.woff?v=3.19": "/static/media/Inter-Regular.8c206db99195777c6769.woff",
-    "static/media/Inter-Bold.woff2?v=3.19": "/static/media/Inter-Bold.ec64ea577b0349e055ad.woff2",
-    "static/media/Inter-Medium.woff2?v=3.19": "/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
-    "static/media/Inter-SemiBold.woff2?v=3.19": "/static/media/Inter-SemiBold.b5f0f109bc88052d4000.woff2",
-    "static/media/Inter-Regular.woff2?v=3.19": "/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
-    "static/media/profile_avatar.jpg": "/static/media/profile_avatar.4479ca7a359fe87ec3eb.jpg",
-    "static/media/hero_decoration.svg": "/static/media/hero_decoration.7f7ea0082a633cd05f5d.svg",
-    "index.html": "/index.html",
-    "static/media/logo.svg": "/static/media/logo.123a8044ec228de9de9856873532fd05.svg",
-    "static/media/profile_btn_icon.svg": "/static/media/profile_btn_icon.b2fcc31f62dfffd269be.svg",
-    "static/media/icon_btn_delete.svg": "/static/media/icon_btn_delete.e9323146d64b3726848b.svg",
-    "static/media/icon_arrow.svg": "/static/media/icon_arrow.441ce4d13a4f17fa1209.svg",
-    "static/media/icon_btn_saved.svg": "/static/media/icon_btn_saved.d44c6f1b053b0167f63f.svg",
-    "main.4ed84ac9.css.map": "/static/css/main.4ed84ac9.css.map",
-    "main.c1a6f885.js.map": "/static/js/main.c1a6f885.js.map"
+    "main.css": "/movies-explorer-frontend/static/css/main.c891901c.css",
+    "main.js": "/movies-explorer-frontend/static/js/main.6b77d6ee.js",
+    "static/media/Inter-Bold.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-Bold.93c1301bd9f486c573b3.woff",
+    "static/media/Inter-SemiBold.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-SemiBold.cca62d21c8c555c392e5.woff",
+    "static/media/Inter-Medium.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
+    "static/media/Inter-Regular.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-Regular.8c206db99195777c6769.woff",
+    "static/media/Inter-Bold.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-Bold.ec64ea577b0349e055ad.woff2",
+    "static/media/Inter-Medium.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
+    "static/media/Inter-SemiBold.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-SemiBold.b5f0f109bc88052d4000.woff2",
+    "static/media/Inter-Regular.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
+    "static/media/profile_avatar.jpg": "/movies-explorer-frontend/static/media/profile_avatar.4479ca7a359fe87ec3eb.jpg",
+    "static/media/hero_decoration.svg": "/movies-explorer-frontend/static/media/hero_decoration.7f7ea0082a633cd05f5d.svg",
+    "index.html": "/movies-explorer-frontend/index.html",
+    "static/media/logo.svg": "/movies-explorer-frontend/static/media/logo.123a8044ec228de9de9856873532fd05.svg",
+    "static/media/profile_btn_icon.svg": "/movies-explorer-frontend/static/media/profile_btn_icon.b2fcc31f62dfffd269be.svg",
+    "static/media/icon_btn_delete.svg": "/movies-explorer-frontend/static/media/icon_btn_delete.e9323146d64b3726848b.svg",
+    "static/media/icon_arrow.svg": "/movies-explorer-frontend/static/media/icon_arrow.441ce4d13a4f17fa1209.svg",
+    "static/media/icon_btn_saved.svg": "/movies-explorer-frontend/static/media/icon_btn_saved.d44c6f1b053b0167f63f.svg",
+    "main.c891901c.css.map": "/movies-explorer-frontend/static/css/main.c891901c.css.map",
+    "main.6b77d6ee.js.map": "/movies-explorer-frontend/static/js/main.6b77d6ee.js.map"
   },
   "entrypoints": [
-    "static/css/main.4ed84ac9.css",
-    "static/js/main.c1a6f885.js"
+    "static/css/main.c891901c.css",
+    "static/js/main.6b77d6ee.js"
   ]
 }
