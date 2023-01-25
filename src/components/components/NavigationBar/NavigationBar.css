@@ -17,3 +17,15 @@
 .navigation-bar__links-list_place_landing {
     gap: 20px;
 }
+
+.navigation-bar__links-list_place_side-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+}
+
+@media screen and (max-width: 767px) {
+    .navigation-bar__links-list_place_side-bar {
+        gap: 24px;
+    }
+}

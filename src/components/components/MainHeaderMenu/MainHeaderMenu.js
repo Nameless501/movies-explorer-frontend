@@ -3,7 +3,7 @@ import ProfileButton from '../../UI/ProfileButton/ProfileButton';
 import BurgerButton from '../../UI/BurgerButton/BurgerButton';
 import './MainHeaderMenu.css';
 
-function MainHeaderMenu() {
+function MainHeaderMenu({ handleSideBarOpen }) {
     return (
         <div className='header-menu-main'>
             <div className='header-menu-main__desktop-wrapper'>
@@ -11,7 +11,9 @@ function MainHeaderMenu() {
                 <ProfileButton />
             </div>
             <div className='header-menu-main__mobile-wrapper'>
-                <BurgerButton />
+                <BurgerButton
+                    handleClick={handleSideBarOpen}
+                />
             </div>
         </div>
     );

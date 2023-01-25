@@ -1,18 +1,12 @@
 import NavigationLink from '../../UI/NavigationLink/NavigationLink';
+import NotFoundScreen from '../../UI/NotFoundScreen/NotFoundScreen';
 import { routesConfig } from '../../../utils/configs';
 import './NotFoundPage.css';
 
 function NotFoundPage() {
     return (
         <main className='not-found-page'>
-            <div className='not-found-page__title-wrapper' >
-                <h2 className='not-found-page__title' >
-                    404
-                </h2>
-                <p className='not-found-page__subtitle' >
-                    Страница не найдена
-                </p>
-            </div>
+            <NotFoundScreen />
             <NavigationLink
                 to={routesConfig.main}
                 text='Назад'
