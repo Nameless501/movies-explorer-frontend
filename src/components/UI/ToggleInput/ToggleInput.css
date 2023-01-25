@@ -1,4 +1,4 @@
-.checkbox {
+.toggle {
     margin: 0;
     padding: 0;
     display: flex;
@@ -6,11 +6,11 @@
     gap: 12px;
 }
 
-.checkbox__input {
+.toggle__checkbox {
     display: none;
 }
 
-.checkbox__label {
+.toggle__label {
     margin: 0;
     padding: 0;
     display: block;
@@ -22,7 +22,7 @@
     transition: background-color .15s linear;
 }
 
-.checkbox__label::after {
+.toggle__label::after {
     content: '';
     margin: 0;
     padding: 0;
@@ -37,23 +37,23 @@
     transition: left .15s linear, background-color .15s linear;
 }
 
-.checkbox__label:hover {
+.toggle__label:hover {
     cursor: pointer;
     opacity: .8;
 }
 
-.checkbox__input:checked+.checkbox__label {
+.toggle__checkbox:checked + .toggle__label {
     background-color: var(--colors_checkbox_bg_checked);
     transition: background-color .15s linear;
 }
 
-.checkbox__input:checked+.checkbox__label::after {
+.toggle__checkbox:checked + .toggle__label::after {
     background-color: var(--colors_checkbox_slider_checked);
     left: 18px;
     transition: left .15s linear, background-color .15s linear;
 }
 
-.checkbox__title {
+.toggle__title {
     margin: 0;
     padding: 0;
     font-weight: 400;
@@ -62,11 +62,11 @@
 }
 
 @media screen and (max-width: 767px) {
-    .checkbox {
+    .toggle {
         gap: 13px;
     }
 
-    .checkbox__title {
+    .toggle__title {
         font-size: 11px;
     }
 }

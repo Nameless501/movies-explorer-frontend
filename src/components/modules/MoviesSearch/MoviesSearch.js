@@ -1,5 +1,5 @@
 import SearchInput from '../../components/SearchInput/SearchInput';
-import Checkbox from '../../UI/Checkbox/Checkbox';
+import ToggleInput from '../../UI/ToggleInput/ToggleInput';
 import './MoviesSearch.css';
 
 function MoviesSearch() {
@@ -7,7 +7,7 @@ function MoviesSearch() {
         <section className='movies-search' >
             <form className='movies-search__form' >
                 <SearchInput />
-                <Checkbox
+                <ToggleInput
                     name='shortfilms'
                     id='shortfilms-selector'
                     title='Короткометражки'

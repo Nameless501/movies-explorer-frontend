@@ -1,6 +1,6 @@
 .text-input {
     margin: 0;
-    padding: 16px 20px;
+    padding: 0x;
     box-sizing: border-box;
     border: 0;
     width: 100%;
@@ -22,7 +22,13 @@
 }
 
 .text-input_place_search {
+    padding: 16px 20px;
     max-width: 1086px;
+}
+
+.text-input_place_search:focus {
+    border: 1px solid var(--fonts_colors_main);
+    padding: 15px 19px;
 }
 
 .text-input_place_form {
@@ -30,15 +36,24 @@
     padding: 15px;
 }
 
+.text-input_place_form:focus {
+    border: 1px solid var(--fonts_colors_main);
+    padding: 14px;
+}
+
 .text-input_place_profile {
     width: 70%;
-    padding: 0;
+    padding: 10px 0;
     background-color: transparent;
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
-    border-radius: 0;
     text-align: end;
+}
+
+.text-input_place_profile:focus {
+    padding-right: 5px;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .text-input_state_error {

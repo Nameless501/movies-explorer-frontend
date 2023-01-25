@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import moviesList from '../../../utils/moviesList.json';
 import savedMoviesList from '../../../utils/savedMoviesList.json'
 import MoviesList from '../../components/MoviesList/MoviesList';
@@ -6,14 +7,25 @@ import Preloader from '../../UI/Preloader/Preloader';
 import './Movies.css';
 
 function Movies() {
+    const [isLoading, setLoadingState] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => setLoadingState(false), 1000);
+    }, [])
+
     return (
         <section className='movies'>
-            <MoviesList
-                moviesList={moviesList}
-                savedMoviesList={savedMoviesList}
-            />
-            <MoreButton />
-            {/* <Preloader /> */}
+            {isLoading ?
+                <Preloader />
+                :
+                <>
+                    <MoviesList
+                        moviesList={moviesList}
+                        savedMoviesList={savedMoviesList}
+                    />
+                    <MoreButton />
+                </>
+            }
         </section>
     );
 }
