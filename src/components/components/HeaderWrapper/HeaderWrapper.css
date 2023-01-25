@@ -1,22 +1,30 @@
-.header-landing {
+.header-wrapper {
     margin: 0;
     padding: 18px 70px;
     box-sizing: border-box;
     width: 100%;
-    background-color: var(--colors_bg_accent_purple);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.header-wrapper_place_landing {
+    background-color: var(--colors_bg_accent_purple);
+}
+
+.header-wrapper_place_main {
+    background-color: var(--colors_bg_main);
+    gap: 44px;
+}
+
 @media screen and (max-width: 1023px) {
-    .header-landing {
+    .header-wrapper {
         padding: 18px 30px;
     }
 }
 
 @media screen and (max-width: 767px) {
-    .header-landing {
+    .header-wrapper {
         padding: 18px 14px;
     }
 }

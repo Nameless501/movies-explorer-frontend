@@ -68,7 +68,7 @@
     }
 
     .footer__content-wrapper {
-        margin-top: 30px;
+        margin-top: 25px;
         flex-direction: column-reverse;
         gap: 30px;
     }
@@ -82,6 +82,6 @@
     .footer__links-list {
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
     }
 }

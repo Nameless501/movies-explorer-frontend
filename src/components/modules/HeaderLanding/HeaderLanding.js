@@ -1,12 +1,10 @@
 import { useState } from 'react';
+import HeaderWrapper from '../../components/HeaderWrapper/HeaderWrapper';
 import AuthMenu from '../../components/AuthMenu/AuthMenu';
 import LandingHeaderMenu from '../../components/LandingHeaderMenu/LandingHeaderMenu';
-import Logo from '../../UI/Logo/Logo';
-import SideBar from '../../components/SideBar/SideBar';
-import './HeaderLanding.css';
 
 function HeaderLanding() {
-    const [isLoggedIn, setLoggedState] = useState(true);
+    const [isLoggedIn, setLoggedState] = useState(false);
     const [sideBarIsOpen, setSideBarState] = useState(false);
 
     function handleSideBarToggle() {
@@ -14,22 +12,19 @@ function HeaderLanding() {
     }
 
     return (
-        <>
-            <header className='header-landing'>
-                <Logo />
-                {isLoggedIn ?
-                    <LandingHeaderMenu
-                        handleSideBarOpen={handleSideBarToggle}
-                    />
-                    :
-                    <AuthMenu />
-                }
-            </header>
-            <SideBar
-                isOpen={sideBarIsOpen}
-                handleSideBarClose={handleSideBarToggle}
-            />
-        </>
+        <HeaderWrapper
+            sideBarIsOpen={sideBarIsOpen}
+            handleSideBarToggle={handleSideBarToggle}
+            place='landing'
+        >
+            {isLoggedIn ?
+                <LandingHeaderMenu
+                    handleSideBarOpen={handleSideBarToggle}
+                />
+                :
+                <AuthMenu />
+            }
+        </HeaderWrapper>
     );
 }
 

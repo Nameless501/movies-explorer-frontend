@@ -8,6 +8,8 @@ function BurgerButton({ handleClick }) {
             onClick={handleClick}
         >
             <div className='burger-button__line' />
+            <div className='burger-button__line' />
+            <div className='burger-button__line' />
         </button>
     );
 }

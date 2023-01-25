@@ -18,6 +18,7 @@
 @media screen and (max-width: 1023px) {
     .side-bar {
         display: flex;
+        gap: 625px;
     }
 }
 
@@ -25,5 +26,6 @@
     .side-bar {
         padding: 144px 10px 46px;
         width: 320px;
+        gap: 445px;
     }
 }

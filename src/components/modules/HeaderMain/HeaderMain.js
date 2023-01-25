@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import AuthMenu from '../../components/AuthMenu/AuthMenu';
 import MainHeaderMenu from '../../components/MainHeaderMenu/MainHeaderMenu';
-import Logo from '../../UI/Logo/Logo';
-import SideBar from '../../components/SideBar/SideBar';
-import './HeaderMain.css';
+import HeaderWrapper from '../../components/HeaderWrapper/HeaderWrapper';
 
 function HeaderMain() {
     const [isLoggedIn, setLoggedState] = useState(true);
@@ -14,22 +12,19 @@ function HeaderMain() {
     }
 
     return (
-        <>
-            <header className='header-main'>
-                <Logo />
-                {isLoggedIn ?
-                    <MainHeaderMenu
-                        handleSideBarOpen={handleSideBarToggle}
-                    />
-                    :
-                    <AuthMenu />
-                }
-            </header>
-            <SideBar
-                isOpen={sideBarIsOpen}
-                handleSideBarClose={handleSideBarToggle}
-            />
-        </>
+        <HeaderWrapper
+            sideBarIsOpen={sideBarIsOpen}
+            handleSideBarToggle={handleSideBarToggle}
+            place='main'
+        >
+            {isLoggedIn ?
+                <MainHeaderMenu
+                    handleSideBarOpen={handleSideBarToggle}
+                />
+                :
+                <AuthMenu />
+            }
+        </HeaderWrapper>
     );
 }
 

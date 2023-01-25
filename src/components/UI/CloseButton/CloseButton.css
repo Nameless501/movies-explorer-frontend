@@ -40,13 +40,13 @@
 
 .close-button_place_side-bar {
     position: absolute;
-    top: 22.5px;
-    right: 22.5px;
+    top: 27px;
+    right: 27px;
 }
 
 @media screen and (max-width: 767px) {
     .close-button_place_side-bar {
-        top: 13.5px;
-        right: 13.5px;
+        top: 18px;
+        right: 18px;
     }
 }

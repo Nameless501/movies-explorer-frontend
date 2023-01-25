@@ -1,4 +1,4 @@
-import PortfolioLink from '../PortfolioLink/PortfolioLink';
+import PortfolioLink from '../../UI/PortfolioLink/PortfolioLink';
 import { PORTFOLIO_LINKS } from '../../../utils/constants';
 import './PortfolioLinksList.css';
 

@@ -2,7 +2,7 @@ import SectionTitle from '../../UI/SectionTitle/SectionTitle';
 import StudentInfo from '../../UI/StudentInfo/StudentInfo';
 import StudentPhoto from '../../UI/StudentPhoto/StudentPhoto';
 import Link from '../../UI/Link/Link';
-import PortfolioLinksList from '../../UI/PortfolioLinksList/PortfolioLinksList';
+import PortfolioLinksList from '../PortfolioLinksList/PortfolioLinksList';
 import './StudentSection.css';
 
 function StudentSection() {
