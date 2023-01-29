@@ -4,9 +4,18 @@ import { routesConfig } from '../../../utils/configs';
 
 import './SignFormWrapper.css';
 
-function SignFormWrapper({ type, children }) {
+function SignFormWrapper({ type, isValid, submitHandler, children }) {
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        submitHandler();
+    }
+
     return (
-        <form className='sign-form' >
+        <form
+            className='sign-form'
+            onSubmit={handleSubmit}
+        >
             <fieldset className='sign-form__fieldset' >
                 {children}
             </fieldset>
@@ -15,6 +24,7 @@ function SignFormWrapper({ type, children }) {
                     <>
                         <SignFormButton
                             text='Зарегистрироваться'
+                            disabled={!isValid}
                         />
                         <FormLink
                             text='Уже зарегистрированы?'
@@ -27,6 +37,7 @@ function SignFormWrapper({ type, children }) {
                     <>
                         <SignFormButton
                             text='Войти'
+                            disabled={!isValid}
                         />
                         <FormLink
                             text='Ещё не зарегистрированы?'

@@ -1,11 +1,11 @@
 import './SignOutButton.css';
 
-function SignOutButton({ handleSignOut }) {
+function SignOutButton({ handleClick }) {
     return (
         <button
             type='button'
             className='sign-out-button'
-            onClick={handleSignOut}
+            onClick={handleClick}
         >
             Выйти из аккаунта
         </button>

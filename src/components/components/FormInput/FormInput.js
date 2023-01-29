@@ -13,6 +13,7 @@ function FormInput(props) {
             <div className='form-input__input-wrapper' >
                 <TextInput {...props} />
                 <span className='form-input__error-message' >
+                    {props.errorMessage}
                 </span>
             </div>
         </div>

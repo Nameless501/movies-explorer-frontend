@@ -10,7 +10,9 @@ function ProfileFormControls({ valueChanged, handleSignOut }) {
                         <p className='profile-form-controls__text' >
                             Редактировать
                         </p>
-                        <SignOutButton />
+                        <SignOutButton
+                            handleClick={handleSignOut}
+                        />
                     </>
                     :
                     <SignFormButton

@@ -1,6 +1,6 @@
 import './ToggleInput.css';
 
-function ToggleInput({ handleChange, id, name, title }) {
+function ToggleInput({ handleChange, checked, id, name, title }) {
     return (
         <div className='toggle' >
             <input
@@ -8,6 +8,8 @@ function ToggleInput({ handleChange, id, name, title }) {
                 name={name}
                 id={id}
                 className='toggle__checkbox'
+                onChange={handleChange}
+                checked={checked}
             />
             <label
                 htmlFor={id}

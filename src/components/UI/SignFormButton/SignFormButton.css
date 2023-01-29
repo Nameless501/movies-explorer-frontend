@@ -20,6 +20,7 @@
 
 .sign-form-button:disabled {
     background-color: var(--colors_btn_gray);
+    color: var(--fonts_colors_main);
 }
 
 .sign-form-button:disabled:hover {

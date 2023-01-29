@@ -1,30 +1,45 @@
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useUserContext } from '../../../contexts/UserContext';
+import * as MainAPI from '../../../utils/MainAPI';
+import useFormDataCollect from '../../../hooks/useFormDataCollect';
+import { routesConfig } from '../../../utils/configs';
 import ProfileInput from '../../components/ProfileInput/ProfileInput';
 import ProfileFormControls from '../../components/ProfileFormControls/ProfileFormControls';
-import { CURRENT_USER_EMAIL, CURRENT_USER_NAME } from '../../../utils/constants';
 import './ProfileForm.css';
 
 function ProfileForm() {
-    const [inputsValue, setInputsValue] = useState({ name: CURRENT_USER_NAME, email: CURRENT_USER_EMAIL });
+    const { userData, setCurrentUser, removeCurrentUser } = useUserContext();
+    const { inputsValues, handleInputChange } = useFormDataCollect(userData);
+    const history = useHistory();
 
-    function handleChange(evt) {
-        const { name, value } = evt.target;
-        setInputsValue(current => ({
-            ...current,
-            [name]: value,
-        }))
+    function handleSignOut() {
+        MainAPI.signOut()
+        .then(() => removeCurrentUser())
+        .then(() => history.push(routesConfig.signIn))
+        .catch(err => console.log(err));
+    }
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+
+        MainAPI.setUserData(inputsValues)
+        .then(setCurrentUser)
+        .catch(err => console.log(err));
     }
 
     return (
-        <form className='profile-form' >
+        <form
+            className='profile-form'
+            onSubmit={handleSubmit}
+        >
             <fieldset className='profile-form__fieldset' >
                 <ProfileInput
                     name='name'
                     id='name-input'
                     label='Имя'
                     place='profile'
-                    value={inputsValue.name}
-                    handleChange={handleChange}
+                    value={inputsValues.name}
+                    handleChange={handleInputChange}
                 />
                 <ProfileInput
                     type='email'
@@ -32,12 +47,13 @@ function ProfileForm() {
                     id='email-input'
                     label='E-mail'
                     place='profile'
-                    value={inputsValue.email}
-                    handleChange={handleChange}
+                    value={inputsValues.email}
+                    handleChange={handleInputChange}
                 />
             </fieldset>
             <ProfileFormControls
-                valueChanged={(inputsValue.name === CURRENT_USER_NAME) && (inputsValue.email === CURRENT_USER_EMAIL)}
+                valueChanged={(inputsValues.name === userData.name) && (inputsValues.email === userData.email)}
+                handleSignOut={handleSignOut}
             />
         </form>
     );
