@@ -1,27 +1,17 @@
 import { useCallback } from 'react';
 
 function useResultCache() {
-    const saveMoviesCache = useCallback((movies, error) => {
-        sessionStorage.setItem('moviesCache', JSON.stringify({ movies, error }));
+    function saveResultCache (result) {
+        const current = JSON.parse(sessionStorage.getItem('moviesCache'));
+        sessionStorage.setItem('moviesCache', JSON.stringify({ ...current, ...result }));
+    };
+
+    const getResultCache = useCallback(() => {
+        const cache = JSON.parse(sessionStorage.getItem('moviesCache'));
+        return cache ? cache : {};
     }, []);
 
-    const getMoviesCache = useCallback(() => {
-        const movies = JSON.parse(sessionStorage.getItem('moviesCache'))
-
-        return movies ? movies : { movies: [], error: '' };
-    }, []);
-
-    const saveSearchCache = useCallback((keywords) => {
-        sessionStorage.setItem('searchCache', JSON.stringify(keywords));
-    }, [])
-
-    const getSearchCache = useCallback(() => {
-        const keywords = JSON.parse(sessionStorage.getItem('searchCache'))
-
-        return keywords ? keywords : { search: '', shortfilms: true };
-    })
-
-    return { saveMoviesCache, getMoviesCache, saveSearchCache, getSearchCache };
+    return { saveResultCache, getResultCache };
 }
 
 export default useResultCache;

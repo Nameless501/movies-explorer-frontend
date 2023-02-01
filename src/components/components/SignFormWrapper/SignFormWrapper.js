@@ -2,20 +2,13 @@ import SignFormButton from '../../UI/SignFormButton/SignFormButton';
 import FormLink from '../../components/FormLink/FormLink';
 import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import { routesConfig } from '../../../utils/configs';
-
 import './SignFormWrapper.css';
 
-function SignFormWrapper({ type, isValid, submitHandler, error, children }) {
-
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        submitHandler();
-    }
-
+function SignFormWrapper({ type, isValid, onSubmit, error, children }) {
     return (
         <form
             className='sign-form'
-            onSubmit={handleSubmit}
+            onSubmit={onSubmit}
         >
             <fieldset className='sign-form__fieldset' >
                 {children}

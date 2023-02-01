@@ -1,22 +1,14 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import * as MainAPI from '../../../utils/MainAPI';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
-import { useUserContext } from '../../../contexts/UserContext';
 import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
-import { routesConfig, signInErrorsConfig } from '../../../utils/configs';
 
-function SignInForm() {
-    const { inputsValues, errorMessages, formIsValid, handleInputChange, setErrorMessage, resetFormValues } = useFormStateAndValidation();
-    const { setCurrentUser } = useUserContext();
-    const history = useHistory();
+function SignInForm({ handleSubmit, error }) {
+    const { inputsValues, errorMessages, formIsValid, handleInputChange, resetFormValues } = useFormStateAndValidation();
 
-    function handleSignIn() {
-        MainAPI.signIn(inputsValues)
-        .then(setCurrentUser)
-        .then(() => history.push(routesConfig.movies))
-        .catch(err => setErrorMessage({ form: signInErrorsConfig[err] }));
+    function onSubmit(evt) {
+        evt.preventDefault();
+        handleSubmit(inputsValues);
     }
 
     useEffect(() => {
@@ -28,9 +20,9 @@ function SignInForm() {
     return (
         <SignFormWrapper
             type='sign-in'
-            submitHandler={handleSignIn}
+            onSubmit={onSubmit}
             isValid={formIsValid}
-            error={errorMessages.form}
+            error={error}
         >
             <FormInput
                 label='E-mail'

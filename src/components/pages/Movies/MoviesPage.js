@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
+import useResultCache from '../../../hooks/useResultCache';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
@@ -19,7 +20,8 @@ function MoviesPage() {
     const [errorMessage, setErrorMessage] = useState('');
 
     const { userMoviesList, addUserMovie, deleteUserMovie } = useUserMoviesContext();
-    const { filteredMoviesList, handleMoviesSearch } = useMoviesSearch(setErrorMessage);
+    const { filteredMoviesList, handleMoviesSearch, resetFilteredMoviesList } = useMoviesSearch(setErrorMessage);
+    const { saveResultCache, getResultCache } = useResultCache();
 
     // movies filter and submit handlers
 
@@ -28,7 +30,7 @@ function MoviesPage() {
             .then(movies => {
                 setMoviesList(() => movies);
                 localStorage.setItem('movies', JSON.stringify(movies));
-                handleMoviesSearch(movies, inputsValue);
+                handleMoviesSearch(movies, inputsValue, saveResultCache);
             })
             .catch(err => {
                 setErrorMessage(ERROR_MOVIES_FETCH);
@@ -37,16 +39,16 @@ function MoviesPage() {
             .finally(() => setLoadingState(false));
     };
 
-    function handleSubmit(inputsValue) {
+    function handleSubmit(inputsValues) {
         setLoadingState(true);
 
         if (moviesList.length > 0) {
-            handleMoviesSearch(moviesList, inputsValue);
+            handleMoviesSearch(moviesList, inputsValues, saveResultCache);
             setLoadingState(false);
         }
 
         if (moviesList.length === 0) {
-            handleMoviesDataFetch(inputsValue)
+            handleMoviesDataFetch(inputsValues)
         }
     };
 
@@ -64,12 +66,21 @@ function MoviesPage() {
             .catch(err => console.log(`Не удалось удалить фильм. Ошибка: ${err}`));
     }
 
+    useEffect(() => {
+        const { movies, error } = getResultCache();
+
+        movies && resetFilteredMoviesList(movies);
+        error && setErrorMessage(error);
+
+    }, [getResultCache, resetFilteredMoviesList]);
+
     return (
         <div className='movies-page' >
             <HeaderMain />
             <main className='movies-page__content' >
                 <MoviesSearch
                     handleSubmit={handleSubmit}
+                    loadCacheValues={true}
                 />
                 <Movies
                     moviesList={filteredMoviesList}

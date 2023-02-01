@@ -22,3 +22,5 @@ export const ERROR_MOVIES_FETCH = 'Во время запроса произош
 export const ERROR_NO_USER_MOVIES = 'Нет сохраненных фильмов';
 
 export const SHORTFILM_DURATION = 40;
+
+export const PATTERN_NAME = '^[a-zA-Zа-яА-ЯёЁ-]+[a-zA-Zа-яА-ЯёЁ -]*$';

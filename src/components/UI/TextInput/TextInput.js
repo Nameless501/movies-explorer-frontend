@@ -1,6 +1,6 @@
 import './TextInput.css';
 
-function TextInput({ type='text', placeholder, required=false, place, handleChange, value, name, errorMessage }) {
+function TextInput({ type='text', placeholder, pattern, required=false, place, handleChange, value, name, errorMessage }) {
     return (
         <input
             className={`
@@ -14,6 +14,7 @@ function TextInput({ type='text', placeholder, required=false, place, handleChan
             onChange={handleChange}
             value={value || ''}
             name={name}
+            pattern={pattern}
         />
     );
 }

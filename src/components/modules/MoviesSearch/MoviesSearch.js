@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
+import useResultCache from '../../../hooks/useResultCache';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import ToggleInput from '../../UI/ToggleInput/ToggleInput';
 import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import { ERROR_MOVIES_INPUT } from '../../../utils/constants';
 import './MoviesSearch.css';
 
-function MoviesSearch({ handleSubmit }) {
+function MoviesSearch({ handleSubmit, loadCacheValues = false }) {
     const [validationError, setValidationError] = useState('');
-    const { inputsValues, handleInputChange, handleToggleChange } = useFormStateAndValidation({ shortfilms: true });
+    const { inputsValues, handleInputChange, handleToggleChange, resetFormValues } = useFormStateAndValidation({ shortfilms: true });
+    const { getResultCache } = useResultCache();
+
 
     function onSubmit(evt) {
         evt.preventDefault();
@@ -21,6 +24,15 @@ function MoviesSearch({ handleSubmit }) {
 
         handleSubmit(inputsValues);
     }
+
+    // load previous search cache
+
+    useEffect(() => {
+        if (loadCacheValues) {
+            const { keywords } = getResultCache();
+            keywords && resetFormValues(keywords);
+        }
+    }, [loadCacheValues, getResultCache, resetFormValues]);
 
     return (
         <section className='movies-search' >

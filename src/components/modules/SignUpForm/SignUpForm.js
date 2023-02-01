@@ -1,19 +1,15 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import * as MainAPI from '../../../utils/MainAPI';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
-import { routesConfig, signUpErrorsConfig } from '../../../utils/configs';
 import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
+import { PATTERN_NAME } from '../../../utils/constants';
 
-function SignUpForm() {
-    const { inputsValues, errorMessages, formIsValid, handleInputChange, setErrorMessage, resetFormValues } = useFormStateAndValidation();
-    const history = useHistory();
+function SignUpForm({ handleSubmit, error }) {
+    const { inputsValues, errorMessages, formIsValid, handleInputChange, resetFormValues } = useFormStateAndValidation();
 
-    function handleSignUp() {
-        MainAPI.signUp(inputsValues)
-            .then(() => history.push(routesConfig.signIn))
-            .catch(err => setErrorMessage({ form: signUpErrorsConfig[err] }));
+    function onSubmit(evt) {
+        evt.preventDefault();
+        handleSubmit(inputsValues);
     }
 
     useEffect(() => {
@@ -25,9 +21,9 @@ function SignUpForm() {
     return (
         <SignFormWrapper
             type='sign-up'
-            submitHandler={handleSignUp}
+            onSubmit={onSubmit}
             isValid={formIsValid}
-            error={errorMessages.form}
+            error={error}
         >
             <FormInput
                 label='Имя'
@@ -38,6 +34,7 @@ function SignUpForm() {
                 errorMessage={errorMessages.name}
                 value={inputsValues.name}
                 handleChange={handleInputChange}
+                pattern={PATTERN_NAME}
             />
             <FormInput
                 label='E-mail'
