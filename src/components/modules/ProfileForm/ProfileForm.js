@@ -1,22 +1,31 @@
+import { useLayoutEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUserContext } from '../../../contexts/UserContext';
 import * as MainAPI from '../../../utils/MainAPI';
-import useFormDataCollect from '../../../hooks/useFormDataCollect';
-import { routesConfig } from '../../../utils/configs';
+import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
+import { routesConfig, profileErrorsConfig } from '../../../utils/configs';
 import ProfileInput from '../../components/ProfileInput/ProfileInput';
 import ProfileFormControls from '../../components/ProfileFormControls/ProfileFormControls';
 import './ProfileForm.css';
 
 function ProfileForm() {
     const { userData, setCurrentUser, removeCurrentUser } = useUserContext();
-    const { inputsValues, handleInputChange } = useFormDataCollect(userData);
+    const { inputsValues, formIsValid, errorMessages, handleInputChange, setErrorMessage, resetFormValues } = useFormStateAndValidation();
     const history = useHistory();
+
+    useLayoutEffect(() => {
+        resetFormValues(userData);
+    }, [userData, resetFormValues]);
 
     function handleSignOut() {
         MainAPI.signOut()
         .then(() => removeCurrentUser())
+        .then(() => {
+            localStorage.clear();
+            sessionStorage.clear();
+        })
         .then(() => history.push(routesConfig.signIn))
-        .catch(err => console.log(err));
+        .catch(err => setErrorMessage({ form: profileErrorsConfig.signOut }));
     }
 
     function handleSubmit(evt) {
@@ -24,7 +33,7 @@ function ProfileForm() {
 
         MainAPI.setUserData(inputsValues)
         .then(setCurrentUser)
-        .catch(err => console.log(err));
+        .catch(err => setErrorMessage({ form: profileErrorsConfig[err] }));
     }
 
     return (
@@ -38,7 +47,9 @@ function ProfileForm() {
                     id='name-input'
                     label='Имя'
                     place='profile'
-                    value={inputsValues.name}
+                    required={true}
+                    error={errorMessages.name}
+                    value={inputsValues.name || ''}
                     handleChange={handleInputChange}
                 />
                 <ProfileInput
@@ -47,13 +58,17 @@ function ProfileForm() {
                     id='email-input'
                     label='E-mail'
                     place='profile'
-                    value={inputsValues.email}
+                    required={true}
+                    error={errorMessages.email}
+                    value={inputsValues.email || ''}
                     handleChange={handleInputChange}
                 />
             </fieldset>
             <ProfileFormControls
-                valueChanged={(inputsValues.name === userData.name) && (inputsValues.email === userData.email)}
+                valueNotChanged={(inputsValues.name === userData.name) && (inputsValues.email === userData.email)}
                 handleSignOut={handleSignOut}
+                formIsValid={formIsValid}
+                error={errorMessages.form}
             />
         </form>
     );

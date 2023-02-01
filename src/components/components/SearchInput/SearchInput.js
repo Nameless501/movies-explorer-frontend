@@ -7,8 +7,9 @@ function SearchInput({ value, handleChange }) {
         <fieldset className='search-input' >
             <TextInput
                 place='search'
-                name='search'
+                name='keyword'
                 placeholder='Фильм'
+                required={true}
                 value={value}
                 handleChange={handleChange}
             />

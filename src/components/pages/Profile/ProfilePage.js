@@ -11,7 +11,7 @@ function ProfilePage() {
             <HeaderMain />
             <main className='profile-page__content' >
                 <h2 className='profile-page__title' >
-                    {`Привет, ${userData.name}!`}
+                    {`Привет, ${userData?.name || ''}!`}
                 </h2>
                 <ProfileForm />
             </main>

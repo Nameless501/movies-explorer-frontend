@@ -13,6 +13,19 @@
     gap: 18px;
 }
 
+.movie-card__link-wrapper {
+    margin: 0;
+    padding: 0;
+    display: blok;
+    width: 100%;
+    text-decoration: none;
+    color: var(--fonts_colors_main);
+}
+
+.movie-card__link-wrapper:visited {
+    color: var(--fonts_colors_main);
+}
+
 .movie-card__figure {
     margin: 0;
     padding: 0;
@@ -60,6 +73,7 @@
     height: 200px;
     object-position: center;
     object-fit: cover;
+    background-color: var(--colors_bg_accent_darkGray);
 }
 
 @media screen and (max-width: 1023px) {

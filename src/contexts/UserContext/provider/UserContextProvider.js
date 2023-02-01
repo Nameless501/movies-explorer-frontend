@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import UserContext from "../context/UserContext";
-
 import * as MainAPI from '../../../utils/MainAPI';
 
 export function CurrentUserProvider({ children }) {
@@ -20,7 +19,12 @@ export function CurrentUserProvider({ children }) {
     useEffect(() => {
         MainAPI.checkToken()
             .then(setCurrentUser)
-            .catch(err => console.log(err));
+            .catch(err => {
+                err === 401 ?
+                    console.log('Необходима авторизация')
+                    :
+                    console.log(`Не удалось авторизовать пользователя. Ошибка: ${err}`)
+            });
     }, []);
 
     return (

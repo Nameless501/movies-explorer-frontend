@@ -1,30 +1,36 @@
-import { useState, useEffect } from 'react';
-import moviesList from '../../../utils/moviesList.json';
-import savedMoviesList from '../../../utils/savedMoviesList.json'
+import useMoviesCardsRender from '../../../hooks/useMoviesCardsRender';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import MoreButton from '../../UI/MoreButton/MoreButton';
 import Preloader from '../../UI/Preloader/Preloader';
+import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './Movies.css';
 
-function Movies() {
-    const [isLoading, setLoadingState] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => setLoadingState(false), 1000);
-    }, [])
+function Movies({ isLoading, moviesList=[], userMoviesList=[], errorMessage, handleMovieSave, handleMovieDelete }) {
+    const { renderedMovies, showMoreMovies, renderButton } = useMoviesCardsRender(moviesList);
 
     return (
         <section className='movies'>
-            {isLoading ?
-                <Preloader />
-                :
+            {isLoading && <Preloader />}
+            {(!isLoading && renderedMovies.length > 0) &&
                 <>
                     <MoviesList
-                        moviesList={moviesList}
-                        savedMoviesList={savedMoviesList}
+                        moviesList={renderedMovies}
+                        userMoviesList={userMoviesList}
+                        handleMovieSave={handleMovieSave}
+                        handleMovieDelete={handleMovieDelete}
                     />
-                    <MoreButton />
+                    {renderButton &&
+                        <MoreButton
+                            handleClick={showMoreMovies}
+                        />
+                    }
                 </>
+            }
+            {(moviesList.length === 0 && errorMessage) &&
+                <ErrorMessage
+                    text={errorMessage}
+                    place='movies'
+                />
             }
         </section>
     );

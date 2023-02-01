@@ -1,38 +1,38 @@
-import MovieCardButton from '../../UI/MovieCardButton/MovieCardButton';
-import { BASE_API_URL } from '../../../utils/constants';
+import { memo } from 'react';
 import './MovieCard.css';
 
-function MovieCard({ nameRU, duration, image, typeSaved, typeDelete }) {
+const MovieCard = memo(function MovieCard({ movie, handleClick, Button }) {
+    const duration = movie.duration.toLocaleString('ru', {style: 'unit', unit: 'minute', unitDisplay: 'long'});
+
     return (
         <div className='movie-card' >
-            <figure className='movie-card__figure' >
-                <figcaption className='movie-card__caption' >
-                    <span className='movie-card__title' >
-                        {nameRU}
-                    </span>
-                    <span className='movie-card__duration' >
-                        {duration.toLocaleString(
-                            'ru',
-                            {
-                                style: 'unit',
-                                unit: 'minute',
-                                unitDisplay: 'long'
-                            }
-                        )}
-                    </span>
-                </figcaption>
-                <img
-                    src={BASE_API_URL + image.url}
-                    alt='постер фильма'
-                    className='movie-card__picture'
-                />
-            </figure>
-            <MovieCardButton
-                typeSaved={typeSaved}
-                typeDelete={typeDelete}
+            <a
+                href={movie.trailerLink}
+                target='_blank'
+                rel='noreferrer'
+                className='movie-card__link-wrapper'
+            >
+                <figure className='movie-card__figure' >
+                    <figcaption className='movie-card__caption' >
+                        <span className='movie-card__title' >
+                            {movie.nameRU}
+                        </span>
+                        <span className='movie-card__duration' >
+                            {duration}
+                        </span>
+                    </figcaption>
+                    <img
+                        src={movie.image}
+                        alt='постер фильма'
+                        className='movie-card__picture'
+                    />
+                </figure>
+            </a>
+            <Button
+                handleClick={handleClick}
             />
         </div>
     );
-}
+})
 
 export default MovieCard;

@@ -1,10 +1,11 @@
 import './MoreButton.css';
 
-function MoreButton() {
+function MoreButton({ handleClick }) {
     return (
         <button
             type='button'
             className='more-button'
+            onClick={handleClick}
         >
             Ещё
         </button>

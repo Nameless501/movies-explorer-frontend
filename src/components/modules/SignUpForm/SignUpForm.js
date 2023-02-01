@@ -1,40 +1,33 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as MainAPI from '../../../utils/MainAPI';
-import useFormValidation from '../../../hooks/useFormValidation';
-import useFormDataCollect from '../../../hooks/useFormDataCollect';
-import { routesConfig } from '../../../utils/configs';
+import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
+import { routesConfig, signUpErrorsConfig } from '../../../utils/configs';
 import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
 
 function SignUpForm() {
-    const { inputsValues, handleInputChange, resetInputsValues } = useFormDataCollect();
-    const { formIsValid, errorMessages, handleValidation, resetFormValidation } = useFormValidation();
+    const { inputsValues, errorMessages, formIsValid, handleInputChange, setErrorMessage, resetFormValues } = useFormStateAndValidation();
     const history = useHistory();
 
     function handleSignUp() {
         MainAPI.signUp(inputsValues)
             .then(() => history.push(routesConfig.signIn))
-            .catch(err => console.log(err));
-    }
-
-    function handleChange(evt) {
-        handleValidation(evt);
-        handleInputChange(evt);
+            .catch(err => setErrorMessage({ form: signUpErrorsConfig[err] }));
     }
 
     useEffect(() => {
         return () => {
-            resetInputsValues();
-            resetFormValidation();
+            resetFormValues();
         }
-    }, [resetInputsValues, resetFormValidation]);
+    }, [resetFormValues]);
 
     return (
         <SignFormWrapper
             type='sign-up'
             submitHandler={handleSignUp}
             isValid={formIsValid}
+            error={errorMessages.form}
         >
             <FormInput
                 label='Имя'
@@ -44,7 +37,7 @@ function SignUpForm() {
                 place='form'
                 errorMessage={errorMessages.name}
                 value={inputsValues.name}
-                handleChange={handleChange}
+                handleChange={handleInputChange}
             />
             <FormInput
                 label='E-mail'
@@ -54,7 +47,7 @@ function SignUpForm() {
                 place='form'
                 errorMessage={errorMessages.email}
                 value={inputsValues.email}
-                handleChange={handleChange}
+                handleChange={handleInputChange}
             />
             <FormInput
                 label='Пароль'
@@ -64,7 +57,7 @@ function SignUpForm() {
                 place='form'
                 errorMessage={errorMessages.password}
                 value={inputsValues.password}
-                handleChange={handleChange}
+                handleChange={handleInputChange}
             />
         </SignFormWrapper>
     );

@@ -1,4 +1,5 @@
 import TextInput from '../../UI/TextInput/TextInput';
+import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './FormInput.css';
 
 function FormInput(props) {
@@ -12,9 +13,10 @@ function FormInput(props) {
             </label>
             <div className='form-input__input-wrapper' >
                 <TextInput {...props} />
-                <span className='form-input__error-message' >
-                    {props.errorMessage}
-                </span>
+                <ErrorMessage
+                    text={props.errorMessage}
+                    place={props.place}
+                />
             </div>
         </div>
     );

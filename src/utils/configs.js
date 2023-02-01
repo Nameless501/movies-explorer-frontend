@@ -26,5 +26,23 @@ export const mainApiConfig = {
     moviesData: 'http://localhost:3000/movies',
 }
 
-export const moviesApiConfig = {
+export const movieApiConfig = {
+    baseURL: 'https://api.nomoreparties.co',
+    getMovies: 'https://api.nomoreparties.co/beatfilm-movies',
+}
+
+export const signInErrorsConfig = {
+    401: 'Вы ввели неправильный логин или пароль.',
+    500: 'При авторизации произошла ошибка.',
+}
+
+export const signUpErrorsConfig = {
+    409: 'Пользователь с таким email уже существует.',
+    500: 'При регистрации пользователя произошла ошибка.',
+}
+
+export const profileErrorsConfig = {
+    409: 'Пользователь с таким email уже существует.',
+    500: 'При обновлении профиля произошла ошибка.',
+    signOut: 'На сервере произошла ошибка. ',
 }

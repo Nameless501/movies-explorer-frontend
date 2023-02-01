@@ -64,3 +64,31 @@ export const checkToken = () => {
     })
         .then(handleResponseCheck);
 }
+
+export const getUserMovies = () => {
+    return fetch(mainApiConfig.moviesData, {
+        method: 'GET',
+        credentials: 'include',
+    })
+        .then(handleResponseCheck);
+}
+
+export const saveMovie = (movie) => {
+    return fetch(mainApiConfig.moviesData, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...movie }),
+    })
+        .then(handleResponseCheck);
+}
+
+export const deleteMovie = (id) => {
+    return fetch(`${mainApiConfig.moviesData}/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+    })
+        .then(handleResponseCheck);
+}

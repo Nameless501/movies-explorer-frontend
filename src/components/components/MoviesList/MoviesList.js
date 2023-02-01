@@ -1,40 +1,32 @@
-import { useState, useEffect } from 'react';
+import MoviesListWrapper from '../MoviesListWrapper/MoviesListWrapper';
 import MovieCard from '../MovieCard/MovieCard';
-import './MoviesList.css';
+import CardButton from '../../UI/CardButton/CardButton';
+import CardButtonSaved from '../../UI/CardButtonSaved/CardButtonSaved';
+import { getMovieId, handleMovieDataFormat } from '../../../utils/utils';
 
-function MoviesList({ moviesList, savedMoviesList = false, isSavedMoviesPage = false }) {
-    const [cardsCount, setCardsCount] = useState(12);
-
-    useEffect(() => {
-        function handleResize() {
-            const renderCount = window.innerWidth > 1023 ? 12 : window.innerWidth > 767 ? 8 : 5;
-            setCardsCount(renderCount);
-        }
-
-        window.addEventListener("resize", handleResize);
-
-        handleResize();
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, [])
-
+function MoviesList({ moviesList, userMoviesList, handleMovieSave, handleMovieDelete }) {
     return (
-        <ul className='movies-list' >
-            {moviesList.slice(0, cardsCount).map(currentMovie => {
+        <MoviesListWrapper >
+            {moviesList.map(currentMovie => {
+                const movieData = handleMovieDataFormat(currentMovie);
+                const movieId = getMovieId(movieData, userMoviesList);
+
+                const isOwn = userMoviesList.some(savedMovie => savedMovie.movieId === currentMovie.id);
+                const handleDelete = handleMovieDelete.bind(null, movieId);
+                const handleSave = handleMovieSave.bind(null, movieData);
+
                 return (
                     <li key={currentMovie.id} >
                         <MovieCard
-                            {...currentMovie}
-                            typeSaved={savedMoviesList ?
-                                savedMoviesList.some(savedMovie => savedMovie.id === currentMovie.id) : false
-                            }
-                            typeDelete={isSavedMoviesPage}
+                            movie={movieData}
+                            Button={isOwn ? CardButtonSaved : CardButton}
+                            handleClick={isOwn ? handleDelete : handleSave}
                         />
                     </li>
                 )
             })
             }
-        </ul>
+        </MoviesListWrapper>
     );
 }
 

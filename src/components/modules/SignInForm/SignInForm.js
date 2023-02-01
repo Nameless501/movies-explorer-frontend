@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as MainAPI from '../../../utils/MainAPI';
-import useFormValidation from '../../../hooks/useFormValidation';
-import useFormDataCollect from '../../../hooks/useFormDataCollect';
+import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
 import { useUserContext } from '../../../contexts/UserContext';
 import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
-import { routesConfig } from '../../../utils/configs';
+import { routesConfig, signInErrorsConfig } from '../../../utils/configs';
 
 function SignInForm() {
-    const { inputsValues, handleInputChange, resetInputsValues } = useFormDataCollect();
-    const { formIsValid, errorMessages, handleValidation, resetFormValidation } = useFormValidation();
+    const { inputsValues, errorMessages, formIsValid, handleInputChange, setErrorMessage, resetFormValues } = useFormStateAndValidation();
     const { setCurrentUser } = useUserContext();
     const history = useHistory();
 
@@ -18,26 +16,21 @@ function SignInForm() {
         MainAPI.signIn(inputsValues)
         .then(setCurrentUser)
         .then(() => history.push(routesConfig.movies))
-        .catch(err => console.log(err));
-    }
-
-    function handleChange(evt) {
-        handleValidation(evt);
-        handleInputChange(evt);
+        .catch(err => setErrorMessage({ form: signInErrorsConfig[err] }));
     }
 
     useEffect(() => {
         return () => {
-            resetInputsValues();
-            resetFormValidation();
+            resetFormValues();
         }
-    }, [resetInputsValues, resetFormValidation]);
+    }, [resetFormValues]);
 
     return (
         <SignFormWrapper
             type='sign-in'
             submitHandler={handleSignIn}
             isValid={formIsValid}
+            error={errorMessages.form}
         >
             <FormInput
                 label='E-mail'
@@ -47,7 +40,7 @@ function SignInForm() {
                 place='form'
                 errorMessage={errorMessages.email}
                 value={inputsValues.email}
-                handleChange={handleChange}
+                handleChange={handleInputChange}
             />
             <FormInput
                 label='Пароль'
@@ -57,7 +50,7 @@ function SignInForm() {
                 place='form'
                 errorMessage={errorMessages.password}
                 value={inputsValues.password}
-                handleChange={handleChange}
+                handleChange={handleInputChange}
             />
         </SignFormWrapper>
     );

@@ -1,27 +1,23 @@
-import { useState, useEffect } from 'react';
-import moviesList from '../../../utils/savedMoviesList.json';
-import MoviesList from '../../components/MoviesList/MoviesList';
 import Preloader from '../../UI/Preloader/Preloader';
+import UserMoviesList from '../../components/UserMoviesList/UserMoviesList';
+import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './SavedMovies.css';
 
-function SavedMovies() {
-    const [isLoading, setLoadingState] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => setLoadingState(false), 1000);
-    }, [])
-
+function SavedMovies({ isLoading, moviesList=[], errorMessage, handleMovieDelete }) {
     return (
         <section className='saved-movies'>
-            {isLoading ?
-                <Preloader />
-                :
-                <>
-                    <MoviesList
-                        moviesList={moviesList}
-                        isSavedMoviesPage={true}
-                    />
-                </>
+            {isLoading && <Preloader />}
+            {(!isLoading && moviesList.length > 0) &&
+                <UserMoviesList
+                    moviesList={moviesList}
+                    handleMovieDelete={handleMovieDelete}
+                />
+            }
+            {(moviesList.length === 0 && errorMessage) &&
+                <ErrorMessage
+                    text={errorMessage}
+                    place='movies'
+                />
             }
         </section>
     );

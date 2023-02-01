@@ -1,11 +1,16 @@
 import SignFormButton from '../../UI/SignFormButton/SignFormButton';
 import SignOutButton from '../../UI/SignOutButton/SignOutButton';
+import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './ProfileFormControls.css';
 
-function ProfileFormControls({ valueChanged, handleSignOut }) {
+function ProfileFormControls({ valueNotChanged, formIsValid, error, handleSignOut }) {
     return (
             <div className='profile-form-controls' >
-                {valueChanged ?
+                <ErrorMessage
+                    text={error}
+                    place='profile-form'
+                />
+                {(valueNotChanged || !formIsValid) ?
                     <>
                         <p className='profile-form-controls__text' >
                             Редактировать

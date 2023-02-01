@@ -1,16 +1,25 @@
-import useFormDataCollect from '../../../hooks/useFormDataCollect';
+import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import ToggleInput from '../../UI/ToggleInput/ToggleInput';
 import './MoviesSearch.css';
 
-function MoviesSearch() {
-    const { inputsValues, handleInputChange, handleToggleChange } = useFormDataCollect({ shortfilms: true });
+function MoviesSearch({ handleSubmit }) {
+    const { inputsValues, handleInputChange, handleToggleChange } = useFormStateAndValidation({ shortfilms: true });
+
+    function onSubmit(evt) {
+        evt.preventDefault();
+        handleSubmit(inputsValues);
+    }
 
     return (
         <section className='movies-search' >
-            <form className='movies-search__form' >
+            <form
+                onSubmit={onSubmit}
+                className='movies-search__form'
+                noValidate
+            >
                 <SearchInput
-                    value={inputsValues.search}
+                    value={inputsValues.keyword}
                     handleChange={handleInputChange}
                 />
                 <ToggleInput
