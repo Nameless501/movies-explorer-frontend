@@ -1,58 +1,40 @@
 import { useState, useEffect } from 'react';
+import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
 import SavedMovies from '../../modules/SavedMovies/SavedMovies';
 import * as MainAPI from '../../../utils/MainAPI';
-import { ERROR_MOVIES_FETCH, ERROR_MOVIES_INPUT } from '../../../utils/constants';
 import './SavedMoviesPage.css';
 
 function SavedMoviesPage() {
-    const [userMoviesList, setUserMoviesList] = useState(JSON.parse(localStorage.getItem('userMovies')));
-    const [isLoading, setLoadingState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    const { userMoviesList, isLoading, error, deleteUserMovie } = useUserMoviesContext();
     const { filteredMoviesList, handleMoviesSearch } = useMoviesSearch(setErrorMessage, userMoviesList);
 
-    // movies filter and submit handlers
+    // submit handler
 
     function handleSubmit(inputsValue) {
-        if (inputsValue.keyword && inputsValue.keyword.length > 0) {
+        if(userMoviesList.length > 0) {
             handleMoviesSearch(userMoviesList, inputsValue);
         }
     };
-
-    // load saved cards
-
-    useEffect(() => {
-        if (!userMoviesList) {
-            setLoadingState(true);
-
-            MainAPI.getUserMovies()
-                .then(movies => {
-                    setUserMoviesList(() => movies);
-                    localStorage.setItem('userMovies', JSON.stringify(movies));
-                })
-                .catch(err => {
-                    setErrorMessage(ERROR_MOVIES_FETCH)
-                    console.log(`Не удалось загрузить фильмы пользователя. Ошибка: ${err}`)
-                })
-                .finally(() => setLoadingState(false));
-        }
-    }, [userMoviesList]);
 
     // delete cards handler
 
     function handleMovieDelete(id) {
         MainAPI.deleteMovie(id)
-                .then(movie => {
-                    const movies = userMoviesList.filter(element => element._id !== movie._id);
-                    setUserMoviesList(movies);
-                    localStorage.setItem('userMovies', JSON.stringify(movies));
-                })
+                .then(deleteUserMovie)
                 .catch(err => console.log(`Не удалось удалить фильм. Ошибка: ${err}`));
     }
+
+    useEffect(() => {
+        if(error) {
+            setErrorMessage(error);
+        }
+    }, [error])
 
     return (
         <div className='saved-movies-page' >

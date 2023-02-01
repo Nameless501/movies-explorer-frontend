@@ -57,3 +57,14 @@
     transform: translateY(-100%);
     text-align: center;
 }
+
+.error-message_place_movies-search {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    left: 0;
+    transform: translateY(-100%);
+    text-align: center;
+    font-size: 13px;
+    line-height: 15px;
+}
