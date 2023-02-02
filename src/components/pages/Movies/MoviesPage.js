@@ -30,7 +30,7 @@ function MoviesPage() {
             .then(movies => {
                 setMoviesList(() => movies);
                 localStorage.setItem('movies', JSON.stringify(movies));
-                handleMoviesSearch(movies, inputsValue, saveResultCache);
+                handleMoviesSearch(movies, inputsValue);
             })
             .catch(err => {
                 setErrorMessage(ERROR_MOVIES_FETCH);
@@ -49,6 +49,12 @@ function MoviesPage() {
 
         if (moviesList.length === 0) {
             handleMoviesDataFetch(inputsValues)
+        }
+    };
+
+    function handleShortFilmsToggle(inputsValues) {
+        if (filteredMoviesList.length > 0) {
+            handleMoviesSearch(moviesList, inputsValues, saveResultCache);
         }
     };
 
@@ -80,6 +86,7 @@ function MoviesPage() {
             <main className='movies-page__content' >
                 <MoviesSearch
                     handleSubmit={handleSubmit}
+                    handleShortFilmsToggle={handleShortFilmsToggle}
                     loadCacheValues={true}
                 />
                 <Movies

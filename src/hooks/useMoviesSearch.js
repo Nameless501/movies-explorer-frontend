@@ -4,9 +4,13 @@ import { SHORTFILM_DURATION, ERROR_NO_MOVIES } from '../utils/constants';
 function useMoviesSearch(handleError, initialState) {
     const [filteredMoviesList, setFilteredMoviesList] = useState([]);
 
-    function handleMoviesSearch(movies, {shortfilms, keyword}, handleSaveCache) {
-        const resultCache = { keywords: { shortfilms, keyword } };
+    function checkError(result) {
+        if (result.length === 0) {
+            handleError(ERROR_NO_MOVIES);
+        }
+    }
 
+    function handleMoviesSearch(movies, {shortfilms, keyword}) {
         const result = movies.filter(movie => {
             return shortfilms ?
                 movie.nameRU.toLowerCase().includes(keyword)
@@ -15,16 +19,7 @@ function useMoviesSearch(handleError, initialState) {
         });
 
         setFilteredMoviesList(result);
-        resultCache.movies = result;
-
-        if (result.length === 0) {
-            handleError(ERROR_NO_MOVIES);
-            resultCache.error = ERROR_NO_MOVIES;
-        }
-
-        if(handleSaveCache) {
-            handleSaveCache(resultCache);
-        }
+        checkError(result);
     };
 
     const resetFilteredMoviesList = useCallback((newMoviesList = []) => {

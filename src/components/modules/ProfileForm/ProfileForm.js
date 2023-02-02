@@ -6,6 +6,7 @@ import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation'
 import { routesConfig, profileErrorsConfig } from '../../../utils/configs';
 import ProfileInput from '../../components/ProfileInput/ProfileInput';
 import ProfileFormControls from '../../components/ProfileFormControls/ProfileFormControls';
+import { PATTERN_NAME } from '../../../utils/constants';
 import './ProfileForm.css';
 
 function ProfileForm() {
@@ -24,7 +25,7 @@ function ProfileForm() {
             localStorage.clear();
             sessionStorage.clear();
         })
-        .then(() => history.push(routesConfig.signIn))
+        .then(() => history.push(routesConfig.main))
         .catch(err => setErrorMessage({ form: profileErrorsConfig.signOut }));
     }
 
@@ -51,6 +52,7 @@ function ProfileForm() {
                     error={errorMessages.name}
                     value={inputsValues.name || ''}
                     handleChange={handleInputChange}
+                    pattern={PATTERN_NAME}
                 />
                 <ProfileInput
                     type='email'

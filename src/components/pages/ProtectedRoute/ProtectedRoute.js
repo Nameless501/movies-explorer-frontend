@@ -6,9 +6,16 @@ function ProtectedRoute ({ path, children }) {
     const { userIsLogged } = useUserContext();
 
     return (
-        <Route path={path} >
-            {() => userIsLogged ? children : <Redirect to={routesConfig.signIn} />}
-        </Route>
+        <Route
+            path={path}
+            render={
+                () => userIsLogged ? children:
+                    <Redirect to={{
+                        pathname: routesConfig.signIn,
+                        state: { from: path },
+                    }} />
+            }
+        />
     );
 };
 

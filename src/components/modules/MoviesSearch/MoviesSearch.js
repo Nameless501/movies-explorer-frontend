@@ -7,11 +7,17 @@ import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import { ERROR_MOVIES_INPUT } from '../../../utils/constants';
 import './MoviesSearch.css';
 
-function MoviesSearch({ handleSubmit, loadCacheValues = false }) {
+function MoviesSearch({ handleSubmit, handleShortFilmsToggle, loadCacheValues = false }) {
     const [validationError, setValidationError] = useState('');
     const { inputsValues, handleInputChange, handleToggleChange, resetFormValues } = useFormStateAndValidation({ shortfilms: true });
     const { getResultCache } = useResultCache();
 
+    function toggleShortFilms(evt) {
+        const { keywords } = getResultCache();
+
+        handleToggleChange(evt);
+        handleShortFilmsToggle({ ...keywords, shortfilms: evt.target.checked });
+    }
 
     function onSubmit(evt) {
         evt.preventDefault();
@@ -53,7 +59,7 @@ function MoviesSearch({ handleSubmit, loadCacheValues = false }) {
                     name='shortfilms'
                     id='shortfilms-selector'
                     title='Короткометражки'
-                    handleChange={handleToggleChange}
+                    handleChange={toggleShortFilms}
                     checked={inputsValues.shortfilms}
                 />
             </form>
