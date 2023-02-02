@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
+import useSearchData from '../../../hooks/useSearchData';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
@@ -10,15 +11,33 @@ import './SavedMoviesPage.css';
 
 function SavedMoviesPage() {
     const [errorMessage, setErrorMessage] = useState('');
+    const [resultMoviesList, setResultMoviesList] = useState([]);
 
     const { userMoviesList, isLoading, error, deleteUserMovie } = useUserMoviesContext();
-    const { filteredMoviesList, handleMoviesSearch } = useMoviesSearch(setErrorMessage, userMoviesList);
+    const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
+    const { keyword, handleCollectData } = useSearchData();
+
+    // handle set filtered movies
+
+    function handleResultRender(shortfilms, keyword, movies) {
+        setResultMoviesList(() => handleMoviesFilter(shortfilms, keyword, movies));
+    };
 
     // submit handler
 
-    function handleSubmit(inputsValue) {
-        if(userMoviesList.length > 0) {
-            handleMoviesSearch(userMoviesList, inputsValue);
+    function handleSubmit(inputsValues) {
+        handleCollectData(inputsValues);
+
+        if (userMoviesList.length > 0) {
+            handleResultRender(inputsValues.shortfilms, inputsValues.keyword, userMoviesList);
+        }
+    };
+
+    function handleShortfilmsToggle(shortfilms) {
+        handleCollectData({ shortfilms });
+
+        if (userMoviesList.length > 0) {
+            handleResultRender(shortfilms, keyword, userMoviesList);
         }
     };
 
@@ -27,14 +46,23 @@ function SavedMoviesPage() {
     function handleMovieDelete(id) {
         MainAPI.deleteMovie(id)
                 .then(deleteUserMovie)
+                .then(() => setResultMoviesList(current => {
+                    return current.filter(movie => movie._id !== id);
+                }))
                 .catch(err => console.log(`Не удалось удалить фильм. Ошибка: ${err}`));
-    }
+    };
 
     useEffect(() => {
         if(error) {
             setErrorMessage(error);
         }
-    }, [error])
+    }, [error]);
+
+    useEffect(() => {
+        if(resultMoviesList.length === 0) {
+            setResultMoviesList(userMoviesList);
+        };
+    }, [userMoviesList]);
 
     return (
         <div className='saved-movies-page' >
@@ -42,9 +70,10 @@ function SavedMoviesPage() {
             <main className='saved-movies-page__content' >
                 <MoviesSearch
                     handleSubmit={handleSubmit}
+                    handleShortfilmsToggle={handleShortfilmsToggle}
                 />
                 <SavedMovies
-                    moviesList={filteredMoviesList}
+                    moviesList={resultMoviesList}
                     isLoading={isLoading}
                     errorMessage={errorMessage}
                     handleMovieDelete={handleMovieDelete}

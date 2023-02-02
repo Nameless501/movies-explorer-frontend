@@ -1,38 +1,35 @@
-import { useEffect, useState, useCallback } from 'react';
 import { SHORTFILM_DURATION, ERROR_NO_MOVIES } from '../utils/constants';
 
-function useMoviesSearch(handleError, initialState) {
-    const [filteredMoviesList, setFilteredMoviesList] = useState([]);
-
+function useMoviesSearch( handleError, initialValue = [] ) {
     function checkError(result) {
         if (result.length === 0) {
             handleError(ERROR_NO_MOVIES);
         }
-    }
-
-    function handleMoviesSearch(movies, {shortfilms, keyword}) {
-        const result = movies.filter(movie => {
-            return shortfilms ?
-                movie.nameRU.toLowerCase().includes(keyword)
-                :
-                movie.nameRU.toLowerCase().includes(keyword) && movie.duration >= SHORTFILM_DURATION;
-        });
-
-        setFilteredMoviesList(result);
-        checkError(result);
     };
 
-    const resetFilteredMoviesList = useCallback((newMoviesList = []) => {
-        setFilteredMoviesList(() => newMoviesList);
-    }, [setFilteredMoviesList]);
+    function filterByKeyword (movies, keyword) {
+        const result = movies.filter(movie => movie.nameRU.toLowerCase().includes(keyword));
+        checkError(result);
+        return result;
+    };
 
-    useEffect(() => {
-        if(initialState) {
-            setFilteredMoviesList(initialState);
+    function filterShortfilms (movies) {
+        const result = movies.filter(movie => movie.duration >= SHORTFILM_DURATION);
+        checkError(result);
+        return result;
+    };
+
+    function handleMoviesFilter(shortfilms, keyword, movies) {
+        let result = filterByKeyword(movies, keyword);
+
+        if (!shortfilms) {
+            result = filterShortfilms(result);
         }
-    }, [initialState]);
 
-    return { filteredMoviesList, handleMoviesSearch, resetFilteredMoviesList };
+        return result;
+    }
+
+    return { handleMoviesFilter };
 }
 
 export default useMoviesSearch;

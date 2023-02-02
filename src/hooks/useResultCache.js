@@ -1,14 +1,13 @@
 import { useCallback } from 'react';
 
 function useResultCache() {
-    function saveResultCache (result) {
+    const saveResultCache = useCallback((result) => {
         const current = JSON.parse(sessionStorage.getItem('moviesCache'));
         sessionStorage.setItem('moviesCache', JSON.stringify({ ...current, ...result }));
-    };
+    }, [])
 
     const getResultCache = useCallback(() => {
-        const cache = JSON.parse(sessionStorage.getItem('moviesCache'));
-        return cache ? cache : {};
+        return JSON.parse(sessionStorage.getItem('moviesCache'));
     }, []);
 
     return { saveResultCache, getResultCache };

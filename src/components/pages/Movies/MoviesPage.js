@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
-import useResultCache from '../../../hooks/useResultCache';
+import useSearchData from '../../../hooks/useSearchData';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
@@ -18,20 +18,30 @@ function MoviesPage() {
     });
     const [isLoading, setLoadingState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [resultMoviesList, setResultMoviesList] = useState([]);
 
     const { userMoviesList, addUserMovie, deleteUserMovie } = useUserMoviesContext();
-    const { filteredMoviesList, handleMoviesSearch, resetFilteredMoviesList } = useMoviesSearch(setErrorMessage);
-    const { saveResultCache, getResultCache } = useResultCache();
+    const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
+    const { keyword, shortfilms, handleCollectData } = useSearchData();
 
-    // movies filter and submit handlers
+    // handle set filtered movies
 
-    function handleMoviesDataFetch(inputsValue) {
+    function handleResultRender(shortfilms, keyword, movies) {
+        setResultMoviesList(() => handleMoviesFilter(shortfilms, keyword, movies));
+    }
+
+    // API fetch
+
+    function handleMoviesDataFetch() {
+        setLoadingState(true);
+
         MoviesApi.getMovies()
             .then(movies => {
                 setMoviesList(() => movies);
                 localStorage.setItem('movies', JSON.stringify(movies));
-                handleMoviesSearch(movies, inputsValue);
+                return movies;
             })
+            .then(movies => handleResultRender(shortfilms, keyword, movies))
             .catch(err => {
                 setErrorMessage(ERROR_MOVIES_FETCH);
                 console.log(`Не удалось загрузить фильмы. Ошибка: ${err}`)
@@ -39,24 +49,25 @@ function MoviesPage() {
             .finally(() => setLoadingState(false));
     };
 
+    // submit and toggle handlers
+
     function handleSubmit(inputsValues) {
-        setLoadingState(true);
+        handleCollectData(inputsValues);
 
         if (moviesList.length > 0) {
-            handleMoviesSearch(moviesList, inputsValues, saveResultCache);
-            setLoadingState(false);
+            handleResultRender(inputsValues.shortfilms, inputsValues.keyword, moviesList);
+        } else {
+            handleMoviesDataFetch();
         }
+    }
 
-        if (moviesList.length === 0) {
-            handleMoviesDataFetch(inputsValues)
-        }
-    };
+    function handleShortfilmsToggle(shortfilms) {
+        handleCollectData({ shortfilms });
 
-    function handleShortFilmsToggle(inputsValues) {
-        if (filteredMoviesList.length > 0) {
-            handleMoviesSearch(moviesList, inputsValues, saveResultCache);
+        if (keyword) {
+            handleResultRender(shortfilms, keyword, moviesList);
         }
-    };
+    }
 
     // save and delete cards handlers
 
@@ -72,25 +83,17 @@ function MoviesPage() {
             .catch(err => console.log(`Не удалось удалить фильм. Ошибка: ${err}`));
     }
 
-    useEffect(() => {
-        const { movies, error } = getResultCache();
-
-        movies && resetFilteredMoviesList(movies);
-        error && setErrorMessage(error);
-
-    }, [getResultCache, resetFilteredMoviesList]);
-
     return (
         <div className='movies-page' >
             <HeaderMain />
             <main className='movies-page__content' >
                 <MoviesSearch
                     handleSubmit={handleSubmit}
-                    handleShortFilmsToggle={handleShortFilmsToggle}
-                    loadCacheValues={true}
+                    handleShortfilmsToggle={handleShortfilmsToggle}
+                    cacheValues={true}
                 />
                 <Movies
-                    moviesList={filteredMoviesList}
+                    moviesList={resultMoviesList}
                     userMoviesList={userMoviesList}
                     isLoading={isLoading}
                     errorMessage={errorMessage}

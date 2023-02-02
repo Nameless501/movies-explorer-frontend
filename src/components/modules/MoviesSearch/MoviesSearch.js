@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
 import useResultCache from '../../../hooks/useResultCache';
 import SearchInput from '../../components/SearchInput/SearchInput';
@@ -7,38 +7,59 @@ import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import { ERROR_MOVIES_INPUT } from '../../../utils/constants';
 import './MoviesSearch.css';
 
-function MoviesSearch({ handleSubmit, handleShortFilmsToggle, loadCacheValues = false }) {
+function MoviesSearch({ handleSubmit, handleShortfilmsToggle, cacheValues = false }) {
     const [validationError, setValidationError] = useState('');
     const { inputsValues, handleInputChange, handleToggleChange, resetFormValues } = useFormStateAndValidation({ shortfilms: true });
-    const { getResultCache } = useResultCache();
+    const { saveResultCache, getResultCache } = useResultCache();
 
-    function toggleShortFilms(evt) {
-        const { keywords } = getResultCache();
+    // input validation
 
-        handleToggleChange(evt);
-        handleShortFilmsToggle({ ...keywords, shortfilms: evt.target.checked });
+    function handleInputValidate() {
+        setValidationError('');
+        const isValid = inputsValues.keyword && inputsValues.keyword.length > 0;
+
+        if (!isValid) {
+            setValidationError(ERROR_MOVIES_INPUT);
+        }
+        return isValid;
     }
+
+    // event handlers
 
     function onSubmit(evt) {
         evt.preventDefault();
-        setValidationError('');
+        const isValid = handleInputValidate();
 
-        if (!inputsValues.keyword || inputsValues.keyword.length === 0) {
-            setValidationError(ERROR_MOVIES_INPUT);
-            return;
+        if (isValid) {
+            handleSubmit(inputsValues);
+            handleValuesCache(inputsValues);
         }
-
-        handleSubmit(inputsValues);
     }
 
-    // load previous search cache
+    function handleToggle(evt) {
+        handleToggleChange(evt);
+        const { name, checked } = evt.target;
 
-    useEffect(() => {
-        if (loadCacheValues) {
-            const { keywords } = getResultCache();
-            keywords && resetFormValues(keywords);
+        handleShortfilmsToggle(checked);
+        handleValuesCache({ [name]: checked });
+    }
+
+    // save and load previous search cache
+
+    function handleValuesCache(inputsValues) {
+        if (cacheValues) {
+            saveResultCache(inputsValues);
         }
-    }, [loadCacheValues, getResultCache, resetFormValues]);
+    }
+
+    useLayoutEffect(() => {
+        if (cacheValues) {
+            const cache = getResultCache();
+
+            cache && resetFormValues(cache);
+            cache?.keyword && handleSubmit(cache);
+        }
+    }, [cacheValues, getResultCache, resetFormValues]);
 
     return (
         <section className='movies-search' >
@@ -59,7 +80,7 @@ function MoviesSearch({ handleSubmit, handleShortFilmsToggle, loadCacheValues = 
                     name='shortfilms'
                     id='shortfilms-selector'
                     title='Короткометражки'
-                    handleChange={toggleShortFilms}
+                    handleChange={handleToggle}
                     checked={inputsValues.shortfilms}
                 />
             </form>
