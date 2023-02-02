@@ -1,6 +1,6 @@
 import { SHORTFILM_DURATION, ERROR_NO_MOVIES } from '../utils/constants';
 
-function useMoviesSearch( handleError, initialValue = [] ) {
+function useMoviesSearch(handleError) {
     function checkError(result) {
         if (result.length === 0) {
             handleError(ERROR_NO_MOVIES);

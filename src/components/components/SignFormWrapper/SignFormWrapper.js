@@ -4,7 +4,7 @@ import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import { routesConfig } from '../../../utils/configs';
 import './SignFormWrapper.css';
 
-function SignFormWrapper({ type, isValid, onSubmit, error, children }) {
+function SignFormWrapper({ type, disabled, onSubmit, error, children }) {
     return (
         <form
             className='sign-form'
@@ -22,7 +22,7 @@ function SignFormWrapper({ type, isValid, onSubmit, error, children }) {
                     <>
                         <SignFormButton
                             text='Зарегистрироваться'
-                            disabled={!isValid}
+                            disabled={disabled}
                         />
                         <FormLink
                             text='Уже зарегистрированы?'
@@ -35,7 +35,7 @@ function SignFormWrapper({ type, isValid, onSubmit, error, children }) {
                     <>
                         <SignFormButton
                             text='Войти'
-                            disabled={!isValid}
+                            disabled={disabled}
                         />
                         <FormLink
                             text='Ещё не зарегистрированы?'

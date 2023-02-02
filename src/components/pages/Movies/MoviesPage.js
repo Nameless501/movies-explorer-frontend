@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
 import useSearchData from '../../../hooks/useSearchData';
+import useResultCache from '../../../hooks/useResultCache';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
@@ -23,11 +24,15 @@ function MoviesPage() {
     const { userMoviesList, addUserMovie, deleteUserMovie } = useUserMoviesContext();
     const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
     const { keyword, shortfilms, handleCollectData } = useSearchData();
+    const { saveResultCache, getResultCache } = useResultCache();
 
-    // handle set filtered movies
+    // set filtered movies and save cache
 
     function handleResultRender(shortfilms, keyword, movies) {
-        setResultMoviesList(() => handleMoviesFilter(shortfilms, keyword, movies));
+        const result = handleMoviesFilter(shortfilms, keyword, movies);
+
+        setResultMoviesList(() => result);
+        saveResultCache('moviesCache', { movies: result });
     }
 
     // API fetch
@@ -82,6 +87,21 @@ function MoviesPage() {
             .then(deleteUserMovie)
             .catch(err => console.log(`Не удалось удалить фильм. Ошибка: ${err}`));
     }
+
+    // save and get cached result
+
+    useEffect(() => {
+        const movieCache = getResultCache('moviesCache');
+        const errorCache = getResultCache('errorsCache');
+
+        movieCache?.movies && setResultMoviesList(movieCache.movies);
+        errorCache?.error && setErrorMessage(errorCache.error);
+
+    }, [getResultCache]);
+
+    useEffect(() => {
+        errorMessage && saveResultCache('errorsCache', { error: errorMessage });
+    }, [errorMessage, saveResultCache]);
 
     return (
         <div className='movies-page' >

@@ -44,6 +44,12 @@
     right: 27px;
 }
 
+.close-button_place_tooltip {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
 @media screen and (max-width: 767px) {
     .close-button_place_side-bar {
         top: 18px;

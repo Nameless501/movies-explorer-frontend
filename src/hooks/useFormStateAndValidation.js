@@ -48,7 +48,7 @@ function useFormStateAndValidation(initialValue = {}) {
         setFormValidity(newIsValid);
     }, [setInputsValues, setErrorMessages, setFormValidity]);
 
-    return { inputsValues, errorMessages, formIsValid, handleInputChange, handleToggleChange, setErrorMessage, resetFormValues }
+    return { inputsValues, errorMessages, formIsValid, handleInputChange, handleToggleChange, resetFormValues }
 }
 
 export default useFormStateAndValidation;

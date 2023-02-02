@@ -3,7 +3,7 @@ import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation'
 import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
 
-function SignInForm({ handleSubmit, error }) {
+function SignInForm({ handleSubmit, isLoading, error }) {
     const { inputsValues, errorMessages, formIsValid, handleInputChange, resetFormValues } = useFormStateAndValidation();
 
     function onSubmit(evt) {
@@ -21,7 +21,7 @@ function SignInForm({ handleSubmit, error }) {
         <SignFormWrapper
             type='sign-in'
             onSubmit={onSubmit}
-            isValid={formIsValid}
+            disabled={!formIsValid || isLoading}
             error={error}
         >
             <FormInput

@@ -10,6 +10,7 @@ import { routesConfig, signInErrorsConfig, signUpErrorsConfig } from '../../../u
 
 function SignPage() {
     const [error, setError] = useState({ signIn: '', signUp: '' });
+    const [isLoading, setIsLoading] = useState(false);
 
     const location = useLocation();
     const history = useHistory();
@@ -17,6 +18,8 @@ function SignPage() {
     const { setCurrentUser } = useUserContext();
 
     function handleSignIn(inputsValues) {
+        setIsLoading(true);
+
         MainAPI.signIn(inputsValues)
             .then(setCurrentUser)
             .then(() => history.push(routesConfig.movies))
@@ -26,19 +29,23 @@ function SignPage() {
                     signIn: signInErrorsConfig[err],
                 }));
 
-                if(location.pathname !== routesConfig.signIn) {
+                if (location.pathname !== routesConfig.signIn) {
                     history.push(routesConfig.signIn);
                 }
-            });
+            })
+            .finally(() => setIsLoading(false));
     }
 
     function handleSignUp(inputsValues) {
+        setIsLoading(true);
+
         MainAPI.signUp(inputsValues)
             .then(() => handleSignIn(inputsValues))
             .catch(err => setError((current) => ({
                 ...current,
                 signUp: signUpErrorsConfig[err],
-            })));
+            })))
+            .finally(() => setIsLoading(false));
     }
 
     return (
@@ -48,6 +55,7 @@ function SignPage() {
                     <SignPageTitle text='Добро пожаловать!' />
                     <SignUpForm
                         handleSubmit={handleSignUp}
+                        isLoading={isLoading}
                         error={error.signUp}
                     />
                 </>
@@ -57,6 +65,7 @@ function SignPage() {
                     <SignPageTitle text='Рады видеть!' />
                     <SignInForm
                         handleSubmit={handleSignIn}
+                        isLoading={isLoading}
                         error={error.signIn}
                     />
                 </>

@@ -12,6 +12,7 @@ import './SavedMoviesPage.css';
 function SavedMoviesPage() {
     const [errorMessage, setErrorMessage] = useState('');
     const [resultMoviesList, setResultMoviesList] = useState([]);
+    const [initialRender, setInitialRender] = useState(true);
 
     const { userMoviesList, isLoading, error, deleteUserMovie } = useUserMoviesContext();
     const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
@@ -23,7 +24,7 @@ function SavedMoviesPage() {
         setResultMoviesList(() => handleMoviesFilter(shortfilms, keyword, movies));
     };
 
-    // submit handler
+    // submit and toggle handlers
 
     function handleSubmit(inputsValues) {
         handleCollectData(inputsValues);
@@ -59,10 +60,11 @@ function SavedMoviesPage() {
     }, [error]);
 
     useEffect(() => {
-        if(resultMoviesList.length === 0) {
+        if(initialRender && userMoviesList.length > 0) {
             setResultMoviesList(userMoviesList);
+            setInitialRender(false);
         };
-    }, [userMoviesList]);
+    }, [initialRender, userMoviesList]);
 
     return (
         <div className='saved-movies-page' >

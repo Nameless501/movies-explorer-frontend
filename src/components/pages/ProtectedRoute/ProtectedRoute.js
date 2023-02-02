@@ -11,7 +11,7 @@ function ProtectedRoute ({ path, children }) {
             render={
                 () => userIsLogged ? children:
                     <Redirect to={{
-                        pathname: routesConfig.signIn,
+                        pathname: routesConfig.main,
                         state: { from: path },
                     }} />
             }

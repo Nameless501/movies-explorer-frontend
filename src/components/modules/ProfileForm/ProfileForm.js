@@ -1,41 +1,23 @@
 import { useLayoutEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useUserContext } from '../../../contexts/UserContext';
-import * as MainAPI from '../../../utils/MainAPI';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
-import { routesConfig, profileErrorsConfig } from '../../../utils/configs';
 import ProfileInput from '../../components/ProfileInput/ProfileInput';
 import ProfileFormControls from '../../components/ProfileFormControls/ProfileFormControls';
 import { PATTERN_NAME } from '../../../utils/constants';
 import './ProfileForm.css';
 
-function ProfileForm() {
-    const { userData, setCurrentUser, removeCurrentUser } = useUserContext();
-    const { inputsValues, formIsValid, errorMessages, handleInputChange, setErrorMessage, resetFormValues } = useFormStateAndValidation();
-    const history = useHistory();
+function ProfileForm({ handleSignOut, handleDataChange, fetchError, isLoading }) {
+    const { userData } = useUserContext();
+    const { inputsValues, formIsValid, errorMessages, handleInputChange, resetFormValues } = useFormStateAndValidation();
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        handleDataChange(inputsValues);
+    }
 
     useLayoutEffect(() => {
         resetFormValues(userData);
     }, [userData, resetFormValues]);
-
-    function handleSignOut() {
-        MainAPI.signOut()
-        .then(() => removeCurrentUser())
-        .then(() => {
-            localStorage.clear();
-            sessionStorage.clear();
-        })
-        .then(() => history.push(routesConfig.main))
-        .catch(err => setErrorMessage({ form: profileErrorsConfig.signOut }));
-    }
-
-    function handleSubmit(evt) {
-        evt.preventDefault();
-
-        MainAPI.setUserData(inputsValues)
-        .then(setCurrentUser)
-        .catch(err => setErrorMessage({ form: profileErrorsConfig[err] }));
-    }
 
     return (
         <form
@@ -69,8 +51,8 @@ function ProfileForm() {
             <ProfileFormControls
                 valueNotChanged={(inputsValues.name === userData.name) && (inputsValues.email === userData.email)}
                 handleSignOut={handleSignOut}
-                formIsValid={formIsValid}
-                error={errorMessages.form}
+                disabled={!formIsValid || isLoading}
+                error={fetchError}
             />
         </form>
     );

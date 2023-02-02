@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
 import useResultCache from '../../../hooks/useResultCache';
 import SearchInput from '../../components/SearchInput/SearchInput';
@@ -11,6 +11,21 @@ function MoviesSearch({ handleSubmit, handleShortfilmsToggle, cacheValues = fals
     const [validationError, setValidationError] = useState('');
     const { inputsValues, handleInputChange, handleToggleChange, resetFormValues } = useFormStateAndValidation({ shortfilms: true });
     const { saveResultCache, getResultCache } = useResultCache();
+
+    // save and load previous search cache
+
+    function handleValuesCache(inputsValues) {
+        if (cacheValues) {
+            saveResultCache('searchCache', inputsValues);
+        }
+    }
+
+    useEffect(() => {
+        if (cacheValues) {
+            const cache = getResultCache('searchCache');
+            cache && resetFormValues(cache);
+        }
+    }, [cacheValues, getResultCache, resetFormValues]);
 
     // input validation
 
@@ -43,23 +58,6 @@ function MoviesSearch({ handleSubmit, handleShortfilmsToggle, cacheValues = fals
         handleShortfilmsToggle(checked);
         handleValuesCache({ [name]: checked });
     }
-
-    // save and load previous search cache
-
-    function handleValuesCache(inputsValues) {
-        if (cacheValues) {
-            saveResultCache(inputsValues);
-        }
-    }
-
-    useLayoutEffect(() => {
-        if (cacheValues) {
-            const cache = getResultCache();
-
-            cache && resetFormValues(cache);
-            cache?.keyword && handleSubmit(cache);
-        }
-    }, [cacheValues, getResultCache, resetFormValues]);
 
     return (
         <section className='movies-search' >

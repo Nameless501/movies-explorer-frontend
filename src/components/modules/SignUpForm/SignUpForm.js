@@ -4,7 +4,7 @@ import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
 import { PATTERN_NAME } from '../../../utils/constants';
 
-function SignUpForm({ handleSubmit, error }) {
+function SignUpForm({ handleSubmit, isLoading, error }) {
     const { inputsValues, errorMessages, formIsValid, handleInputChange, resetFormValues } = useFormStateAndValidation();
 
     function onSubmit(evt) {
@@ -22,7 +22,7 @@ function SignUpForm({ handleSubmit, error }) {
         <SignFormWrapper
             type='sign-up'
             onSubmit={onSubmit}
-            isValid={formIsValid}
+            disabled={!formIsValid || isLoading}
             error={error}
         >
             <FormInput

@@ -3,14 +3,14 @@ import SignOutButton from '../../UI/SignOutButton/SignOutButton';
 import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './ProfileFormControls.css';
 
-function ProfileFormControls({ valueNotChanged, formIsValid, error, handleSignOut }) {
+function ProfileFormControls({ valueNotChanged, disabled, error, handleSignOut }) {
     return (
             <div className='profile-form-controls' >
                 <ErrorMessage
                     text={error}
                     place='profile-form'
                 />
-                {(valueNotChanged || !formIsValid) ?
+                {(valueNotChanged || disabled) ?
                     <>
                         <p className='profile-form-controls__text' >
                             Редактировать
