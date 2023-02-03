@@ -4,6 +4,7 @@ import { handleResponseCheck } from './utils';
 export const signUp = ({ name, password, email }) => {
     return fetch(mainApiConfig.signUp, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json"
         },
@@ -88,7 +89,7 @@ export const saveMovie = (movie) => {
 export const deleteMovie = (id) => {
     return fetch(`${mainApiConfig.moviesData}/${id}`, {
         method: 'DELETE',
-        credentials: 'include',
+        credentials: 'include'
     })
         .then(handleResponseCheck);
 }
