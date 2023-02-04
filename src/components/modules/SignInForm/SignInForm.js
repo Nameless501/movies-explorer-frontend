@@ -32,7 +32,7 @@ function SignInForm({ handleSubmit, isLoading, error }) {
                 place='form'
                 errorMessage={errorMessages.email}
                 value={inputsValues.email}
-                handleChange={handleInputChange}
+                handleChange={(evt) => handleInputChange(evt, { customValidation: true })}
             />
             <FormInput
                 label='Пароль'

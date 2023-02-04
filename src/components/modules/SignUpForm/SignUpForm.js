@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
 import SignFormWrapper from '../../components/SignFormWrapper/SignFormWrapper';
 import FormInput from '../../components/FormInput/FormInput';
-import { PATTERN_NAME } from '../../../utils/constants';
 
 function SignUpForm({ handleSubmit, isLoading, error }) {
     const { inputsValues, errorMessages, formIsValid, handleInputChange, resetFormValues } = useFormStateAndValidation();
@@ -33,18 +32,17 @@ function SignUpForm({ handleSubmit, isLoading, error }) {
                 place='form'
                 errorMessage={errorMessages.name}
                 value={inputsValues.name}
-                handleChange={handleInputChange}
-                pattern={PATTERN_NAME}
+                handleChange={(evt) => handleInputChange(evt, { customValidation: true })}
             />
             <FormInput
                 label='E-mail'
-                type='email'
+                type='text'
                 name='email'
                 required={true}
                 place='form'
                 errorMessage={errorMessages.email}
                 value={inputsValues.email}
-                handleChange={handleInputChange}
+                handleChange={(evt) => handleInputChange(evt, { customValidation: true })}
             />
             <FormInput
                 label='Пароль'

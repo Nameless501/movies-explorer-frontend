@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { MOVIES_COUNT_DESKTOP, MOVIES_COUNT_TABLET, MOVIES_COUNT_MOBILE, MOVIES_MORE_DESKTOP, MOVIES_MORE_MOBILE } from '../utils/constants';
 
 function useResize() {
     const [cardsCount, setCardsCount] = useState(12);
@@ -6,8 +7,11 @@ function useResize() {
 
     useEffect(() => {
         function handleResize() {
-            const renderCount = window.innerWidth > 1279 ? 12 : window.innerWidth > 635 ? 8 : 5;
-            const downloadCount = window.innerWidth > 1279 ? 3 : 2;
+            const renderCount = window.innerWidth > 1279 ? MOVIES_COUNT_DESKTOP : window.innerWidth > 635 ?
+                MOVIES_COUNT_TABLET : MOVIES_COUNT_MOBILE;
+
+            const downloadCount = window.innerWidth > 1279 ? MOVIES_MORE_DESKTOP : MOVIES_MORE_MOBILE;
+
             setCardsCount(renderCount);
             setNewCardsCount(downloadCount);
         }

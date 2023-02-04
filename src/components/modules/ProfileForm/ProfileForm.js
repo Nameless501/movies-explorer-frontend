@@ -3,7 +3,6 @@ import { useUserContext } from '../../../contexts/UserContext';
 import useFormStateAndValidation from '../../../hooks/useFormStateAndValidation';
 import ProfileInput from '../../components/ProfileInput/ProfileInput';
 import ProfileFormControls from '../../components/ProfileFormControls/ProfileFormControls';
-import { PATTERN_NAME } from '../../../utils/constants';
 import './ProfileForm.css';
 
 function ProfileForm({ handleSignOut, handleDataChange, fetchError, isLoading }) {
@@ -33,8 +32,7 @@ function ProfileForm({ handleSignOut, handleDataChange, fetchError, isLoading })
                     required={true}
                     error={errorMessages.name}
                     value={inputsValues.name || ''}
-                    handleChange={handleInputChange}
-                    pattern={PATTERN_NAME}
+                    handleChange={(evt) => handleInputChange(evt, { customValidation: true })}
                 />
                 <ProfileInput
                     type='email'
@@ -45,7 +43,7 @@ function ProfileForm({ handleSignOut, handleDataChange, fetchError, isLoading })
                     required={true}
                     error={errorMessages.email}
                     value={inputsValues.email || ''}
-                    handleChange={handleInputChange}
+                    handleChange={(evt) => handleInputChange(evt, { customValidation: true })}
                 />
             </fieldset>
             <ProfileFormControls

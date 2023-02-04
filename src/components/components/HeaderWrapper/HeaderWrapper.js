@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-import { routesConfig } from '../../../utils/configs';
-import Logo from '../../UI/Logo/Logo';
+import LogoLink from '../LogoLink/LogoLink';
 import SideBar from '../../components/SideBar/SideBar';
 import './HeaderWrapper.css';
 
@@ -13,9 +11,7 @@ function HeaderWrapper({ sideBarIsOpen, handleSideBarToggle, place, children }) 
                     ${ place ? 'header-wrapper_place_' + place : null }
                 `}
             >
-                <Link to={routesConfig.main} >
-                    <Logo />
-                </Link>
+                <LogoLink />
                 <>
                     {children}
                 </>

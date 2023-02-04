@@ -23,7 +23,7 @@ function MoviesPage() {
 
     const { userMoviesList, addUserMovie, deleteUserMovie } = useUserMoviesContext();
     const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
-    const { keyword, shortfilms, handleCollectData } = useSearchData();
+    const { keyword, handleCollectData } = useSearchData();
     const { saveResultCache, getResultCache } = useResultCache();
 
     // set filtered movies and save cache
@@ -37,7 +37,7 @@ function MoviesPage() {
 
     // API fetch
 
-    function handleMoviesDataFetch() {
+    function handleMoviesDataFetch({ shortfilms, keyword }) {
         setLoadingState(true);
 
         MoviesApi.getMovies()
@@ -62,7 +62,7 @@ function MoviesPage() {
         if (moviesList.length > 0) {
             handleResultRender(inputsValues.shortfilms, inputsValues.keyword, moviesList);
         } else {
-            handleMoviesDataFetch();
+            handleMoviesDataFetch(inputsValues);
         }
     }
 
@@ -96,7 +96,6 @@ function MoviesPage() {
 
         movieCache?.movies && setResultMoviesList(movieCache.movies);
         errorCache?.error && setErrorMessage(errorCache.error);
-
     }, [getResultCache]);
 
     useEffect(() => {

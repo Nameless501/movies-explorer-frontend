@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useUserContext } from '../../../contexts/UserContext';
 import SignPageTitle from '../../components/SignPageTitle/SignPageTitle';
@@ -15,14 +15,15 @@ function SignPage() {
     const location = useLocation();
     const history = useHistory();
 
-    const { setCurrentUser } = useUserContext();
+    const { setCurrentUser, userIsLogged } = useUserContext();
+
+    // sign handlers
 
     function handleSignIn(inputsValues) {
         setIsLoading(true);
 
         MainAPI.signIn(inputsValues)
             .then(setCurrentUser)
-            .then(() => history.push(routesConfig.movies))
             .catch(err => {
                 setError((current) => ({
                     ...current,
@@ -32,8 +33,9 @@ function SignPage() {
                 if (location.pathname !== routesConfig.signIn) {
                     history.push(routesConfig.signIn);
                 }
-            })
-            .finally(() => setIsLoading(false));
+
+                setIsLoading(false)
+            });
     }
 
     function handleSignUp(inputsValues) {
@@ -41,12 +43,23 @@ function SignPage() {
 
         MainAPI.signUp(inputsValues)
             .then(() => handleSignIn(inputsValues))
-            .catch(err => setError((current) => ({
-                ...current,
-                signUp: signUpErrorsConfig[err],
-            })))
-            .finally(() => setIsLoading(false));
+            .catch(err => {
+                setError((current) => ({
+                    ...current,
+                    signUp: signUpErrorsConfig[err],
+                }));
+
+                setIsLoading(false);
+            });
     }
+
+    // redirect authorized user to movies page
+
+    useEffect(() => {
+        if (userIsLogged) {
+            history.push(routesConfig.movies);
+        }
+    }, [userIsLogged, history]);
 
     return (
         <SignPageWrapper>
