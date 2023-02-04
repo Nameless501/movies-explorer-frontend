@@ -5,7 +5,6 @@ import { routesConfig, profileErrorsConfig } from '../../../utils/configs';
 import * as MainAPI from '../../../utils/MainAPI';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import ProfileForm from '../../modules/ProfileForm/ProfileForm';
-import Portal from '../../components/Portal/Portal';
 import InfoTooltip from '../../components/InfoTooltip/InfoTooltip';
 import './ProfilePage.css';
 
