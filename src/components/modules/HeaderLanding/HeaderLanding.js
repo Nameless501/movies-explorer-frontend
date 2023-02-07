@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { useUserContext } from '../../../contexts/UserContext';
 import HeaderWrapper from '../../components/HeaderWrapper/HeaderWrapper';
 import AuthMenu from '../../components/AuthMenu/AuthMenu';
 import LandingHeaderMenu from '../../components/LandingHeaderMenu/LandingHeaderMenu';
 
 function HeaderLanding() {
-    const [isLoggedIn, setLoggedState] = useState(false);
+    const { userIsLogged } = useUserContext();
     const [sideBarIsOpen, setSideBarState] = useState(false);
 
     function handleSideBarToggle() {
@@ -17,7 +18,7 @@ function HeaderLanding() {
             handleSideBarToggle={handleSideBarToggle}
             place='landing'
         >
-            {isLoggedIn ?
+            {userIsLogged ?
                 <LandingHeaderMenu
                     handleSideBarOpen={handleSideBarToggle}
                 />

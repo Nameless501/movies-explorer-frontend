@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import AuthMenu from '../../components/AuthMenu/AuthMenu';
 import MainHeaderMenu from '../../components/MainHeaderMenu/MainHeaderMenu';
 import HeaderWrapper from '../../components/HeaderWrapper/HeaderWrapper';
 
 function HeaderMain() {
-    const [isLoggedIn, setLoggedState] = useState(true);
     const [sideBarIsOpen, setSideBarState] = useState(false);
 
     function handleSideBarToggle() {
@@ -17,13 +15,9 @@ function HeaderMain() {
             handleSideBarToggle={handleSideBarToggle}
             place='main'
         >
-            {isLoggedIn ?
-                <MainHeaderMenu
-                    handleSideBarOpen={handleSideBarToggle}
-                />
-                :
-                <AuthMenu />
-            }
+            <MainHeaderMenu
+                handleSideBarOpen={handleSideBarToggle}
+            />
         </HeaderWrapper>
     );
 }

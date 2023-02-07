@@ -1,3 +1,5 @@
+// links
+
 export const PORTFOLIO_LINKS = [
     {
         text: 'Статичный сайт',
@@ -13,8 +15,33 @@ export const PORTFOLIO_LINKS = [
     },
 ];
 
-export const BASE_API_URL = 'https://api.nomoreparties.co';
 
-export const CURRENT_USER_NAME = 'Евгений';
+// movies cards count
 
-export const CURRENT_USER_EMAIL = 'test@email.com';
+
+export const MOVIES_COUNT_DESKTOP = 12;
+
+export const MOVIES_COUNT_TABLET = 8;
+
+export const MOVIES_COUNT_MOBILE = 5;
+
+export const MOVIES_MORE_DESKTOP = 3;
+
+export const MOVIES_MORE_MOBILE = 2;
+
+// movies filter props
+
+
+export const SHORTFILM_DURATION = 40;
+
+
+// error messages
+
+
+export const ERROR_NO_MOVIES = 'Ничего не найдено';
+
+export const ERROR_MOVIES_INPUT = 'Нужно ввести ключевое слово';
+
+export const ERROR_MOVIES_FETCH = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
+
+export const ERROR_NO_USER_MOVIES = 'Нет сохраненных фильмов';

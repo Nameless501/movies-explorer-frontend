@@ -1,10 +1,10 @@
-import Logo from '../../UI/Logo/Logo';
+import LogoLink from '../LogoLink/LogoLink';
 import './SignPageTitle.css';
 
 function SignPageTitle({ text }) {
     return (
         <div className='sign-page-title' >
-            <Logo />
+            <LogoLink />
             <h2 className='sign-page-title__text' >
                 {text}
             </h2>
