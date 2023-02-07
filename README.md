@@ -1,4 +1,4 @@
-# <p align="center">Дипломный проект (финальный этап)</p>
+# <p align="center">Дипломный проект</p>
 
 <div align="center"><h3>Ссылки</h3></div>
 <div align="center"><p>Frontend: <a href="https://nameless.nomoredomainsclub.ru/">https://nameless.nomoredomainsclub.ru/</a></p></div>
