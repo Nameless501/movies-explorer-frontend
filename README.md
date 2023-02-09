@@ -4,8 +4,6 @@
 <div align="center"><p>Frontend: <a href="https://nameless.nomoredomainsclub.ru/">https://nameless.nomoredomainsclub.ru/</a></p></div>
 <div align="center"><p>Backend: <a href="https://api.nameless.nomoredomains.rocks/">https://api.nameless.nomoredomains.rocks/</a></p></div>  
 
-<div align="center"><a href="https://github.com/Nameless501/movies-explorer-frontend/pull/2">Ссылка на pull request</a></div>
-
 ___
 
 ### Описание: 
