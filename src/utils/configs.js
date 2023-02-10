@@ -1,3 +1,7 @@
+import { BASE_URL_MAIN, BASE_URL_MOVIES } from "./constants";
+
+// routes inside application
+
 export const routesConfig = {
     main: '/',
     movies: '/movies',
@@ -8,19 +12,71 @@ export const routesConfig = {
     notFound: '/not-found',
 };
 
-export const mainApiConfig = {
-    baseURL: 'https://api.nameless.nomoredomains.rocks',
-    signIn: 'https://api.nameless.nomoredomains.rocks/signin',
-    signUp: 'https://api.nameless.nomoredomains.rocks/signup',
-    signOut: 'https://api.nameless.nomoredomains.rocks/signout',
-    userData: 'https://api.nameless.nomoredomains.rocks/users/me',
-    moviesData: 'https://api.nameless.nomoredomains.rocks/movies',
+// config for fetch
+
+export const apiConfig = {
+    signIn: {
+        url: BASE_URL_MAIN + '/signin',
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    },
+    signUp: {
+        url: BASE_URL_MAIN + '/signup',
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+    },
+    signOut: {
+        url: BASE_URL_MAIN + '/signout',
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    },
+    userData: {
+        url: BASE_URL_MAIN + '/users/me',
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    },
+    tokenCheck: {
+        url: BASE_URL_MAIN + '/users/me',
+        method: 'GET',
+        credentials: 'include',
+    },
+    userMovies: {
+        url: BASE_URL_MAIN + '/movies',
+        method: 'GET',
+        credentials: 'include',
+    },
+    saveMovie: {
+        url: BASE_URL_MAIN + '/movies',
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    },
+    deleteMovie: {
+        url: BASE_URL_MAIN + '/movies',
+        method: 'DELETE',
+        credentials: 'include',
+    },
+    movies: {
+        url: BASE_URL_MOVIES + '/beatfilm-movies',
+        method: 'GET',
+    }
 }
 
-export const movieApiConfig = {
-    baseURL: 'https://api.nomoreparties.co',
-    getMovies: 'https://api.nomoreparties.co/beatfilm-movies',
-}
+// errors configs
 
 export const signInErrorsConfig = {
     401: 'Вы ввели неправильный логин или пароль.',
@@ -37,6 +93,8 @@ export const profileErrorsConfig = {
     500: 'При обновлении профиля произошла ошибка.',
     signOut: 'На сервере произошла ошибка. ',
 }
+
+// inputs validation config
 
 export const validationConfig = {
     name: {

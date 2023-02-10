@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUserContext } from '../../../contexts/UserContext';
-import { routesConfig, profileErrorsConfig } from '../../../utils/configs';
-import * as MainAPI from '../../../utils/MainAPI';
+import useDataFetch from '../../../hooks/useDataFetch';
+import { routesConfig, profileErrorsConfig, apiConfig } from '../../../utils/configs';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import ProfileForm from '../../modules/ProfileForm/ProfileForm';
 import InfoTooltip from '../../components/InfoTooltip/InfoTooltip';
@@ -14,12 +14,14 @@ function ProfilePage() {
     const [modalIsOpen, setModalState] = useState(false);
 
     const { userData, setCurrentUser, removeCurrentUser } = useUserContext();
+    const { handleFetch } = useDataFetch();
+
     const history = useHistory();
 
     function handleSignOut() {
         setIsLoading(true);
 
-        MainAPI.signOut()
+        handleFetch(apiConfig.signOut)
             .then(() => removeCurrentUser())
             .then(() => {
                 localStorage.clear();
@@ -33,7 +35,7 @@ function ProfilePage() {
     function handleDataChange(inputsValues) {
         setIsLoading(true);
 
-        MainAPI.setUserData(inputsValues)
+        handleFetch(apiConfig.userData, inputsValues)
             .then(setCurrentUser)
             .then(() => setModalState(true))
             .catch(err => setError(profileErrorsConfig[err]))

@@ -45,3 +45,9 @@ export const ERROR_MOVIES_INPUT = 'Нужно ввести ключевое сл
 export const ERROR_MOVIES_FETCH = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 
 export const ERROR_NO_USER_MOVIES = 'Нет сохраненных фильмов';
+
+// base fetch URLs
+
+export const BASE_URL_MOVIES = 'https://api.nomoreparties.co';
+
+export const BASE_URL_MAIN = 'https://api.nameless.nomoredomains.rocks';

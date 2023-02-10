@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import UserMoviesContext from "../context/UserMoviesContext";
-import * as MainAPI from '../../../utils/MainAPI';
+import useDataFetch from "../../../hooks/useDataFetch";
+import { apiConfig } from '../../../utils/configs';
 import { ERROR_MOVIES_FETCH, ERROR_NO_USER_MOVIES } from '../../../utils/constants';
 
 export function UserMoviesProvider({ children }) {
     const [userMoviesList, setUserMoviesList] = useState([]);
     const [isLoading, setLoadingState] = useState(false);
     const [error, setError] = useState('');
+
+    const { handleFetch } = useDataFetch();
 
     function checkUserMovies(moviesList) {
         if(moviesList.length === 0) {
@@ -23,7 +26,7 @@ export function UserMoviesProvider({ children }) {
             checkUserMovies(movies);
             setLoadingState(false);
         } else {
-            MainAPI.getUserMovies()
+            handleFetch(apiConfig.userMovies)
                 .then(movies => {
                     setUserMoviesList(() => movies);
                     localStorage.setItem('userMovies', JSON.stringify(movies));
@@ -35,7 +38,7 @@ export function UserMoviesProvider({ children }) {
                 })
                 .finally(() => setLoadingState(false));
         }
-    }, []);
+    }, [handleFetch]);
 
     function addUserMovie(movie) {
         const updatedList = [ ...userMoviesList, movie ]

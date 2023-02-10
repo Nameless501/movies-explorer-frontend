@@ -3,13 +3,13 @@ import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
 import useSearchData from '../../../hooks/useSearchData';
 import useResultCache from '../../../hooks/useResultCache';
+import useDataFetch from '../../../hooks/useDataFetch';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
 import Movies from '../../modules/Movies/Movies';
-import * as MoviesApi from '../../../utils/MoviesApi';
-import * as MainAPI from '../../../utils/MainAPI';
 import { ERROR_MOVIES_FETCH } from '../../../utils/constants';
+import { apiConfig } from '../../../utils/configs';
 import './MoviesPage.css';
 
 function MoviesPage() {
@@ -25,6 +25,7 @@ function MoviesPage() {
     const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
     const { keyword, handleCollectData } = useSearchData();
     const { saveResultCache, getResultCache } = useResultCache();
+    const { handleFetch, handleFetchById } = useDataFetch();
 
     // set filtered movies and save cache
 
@@ -40,7 +41,7 @@ function MoviesPage() {
     function handleMoviesDataFetch({ shortfilms, keyword }) {
         setLoadingState(true);
 
-        MoviesApi.getMovies()
+        handleFetch(apiConfig.movies)
             .then(movies => {
                 setMoviesList(() => movies);
                 localStorage.setItem('movies', JSON.stringify(movies));
@@ -77,18 +78,18 @@ function MoviesPage() {
     // save and delete cards handlers
 
     function handleMovieSave(movieData) {
-        MainAPI.saveMovie(movieData)
+        handleFetch(apiConfig.saveMovie, movieData)
             .then(addUserMovie)
             .catch(err => console.log(`Не удалось сохранить фильм. Ошибка: ${err}`));
     }
 
     function handleMovieDelete(id) {
-        MainAPI.deleteMovie(id)
+        handleFetchById(apiConfig.deleteMovie, id)
             .then(deleteUserMovie)
             .catch(err => console.log(`Не удалось удалить фильм. Ошибка: ${err}`));
     }
 
-    // save and get cached result
+    // save and get cached search result
 
     useEffect(() => {
         const movieCache = getResultCache('moviesCache');

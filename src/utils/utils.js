@@ -1,8 +1,4 @@
-import { movieApiConfig } from './configs';
-
-export function handleResponseCheck(response) {
-    return response.ok ? response.json() : Promise.reject(response.status);
-}
+import { BASE_URL_MOVIES } from './constants';
 
 export function handleMovieDataFormat({ nameRU, nameEN, country, director, duration, year, image, id, description, trailerLink }) {
     return {
@@ -14,8 +10,8 @@ export function handleMovieDataFormat({ nameRU, nameEN, country, director, durat
         duration,
         year,
         trailerLink,
-        image: movieApiConfig.baseURL + image.url,
-        thumbnail: movieApiConfig.baseURL + image.formats.thumbnail.url,
+        image: BASE_URL_MOVIES + image.url,
+        thumbnail: BASE_URL_MOVIES + image.formats.thumbnail.url,
         movieId: id,
     };
 }

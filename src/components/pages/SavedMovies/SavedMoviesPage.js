@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useUserMoviesContext } from '../../../contexts/UserMoviesContext';
 import useMoviesSearch from '../../../hooks/useMoviesSearch';
 import useSearchData from '../../../hooks/useSearchData';
+import useDataFetch from '../../../hooks/useDataFetch';
 import HeaderMain from '../../modules/HeaderMain/HeaderMain';
 import Footer from '../../components/Footer/Footer';
 import MoviesSearch from '../../modules/MoviesSearch/MoviesSearch';
 import SavedMovies from '../../modules/SavedMovies/SavedMovies';
-import * as MainAPI from '../../../utils/MainAPI';
+import { apiConfig } from '../../../utils/configs';
 import './SavedMoviesPage.css';
 
 function SavedMoviesPage() {
@@ -17,6 +18,7 @@ function SavedMoviesPage() {
     const { userMoviesList, isLoading, error, deleteUserMovie } = useUserMoviesContext();
     const { handleMoviesFilter } = useMoviesSearch(setErrorMessage);
     const { keyword, handleCollectData } = useSearchData();
+    const { handleFetchById } = useDataFetch();
 
     // handle set filtered movies
 
@@ -45,7 +47,7 @@ function SavedMoviesPage() {
     // delete cards handler
 
     function handleMovieDelete(id) {
-        MainAPI.deleteMovie(id)
+        handleFetchById(apiConfig.deleteMovie, id)
                 .then(deleteUserMovie)
                 .then(() => setResultMoviesList(current => {
                     return current.filter(movie => movie._id !== id);
