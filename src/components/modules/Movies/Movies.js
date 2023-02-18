@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMovies } from '../../../store/movies/moviesSlice';
+import { fetchUserMovies, saveUserMovie, deleteUserMovie } from '../../../store/userMovies/userMoviesSlice';
 import useMoviesCardsRender from '../../../hooks/useMoviesCardsRender';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import MoreButton from '../../UI/MoreButton/MoreButton';
@@ -5,17 +9,37 @@ import Preloader from '../../UI/Preloader/Preloader';
 import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './Movies.css';
 
-function Movies({ isLoading, moviesList=[], userMoviesList=[], errorMessage, handleMovieSave, handleMovieDelete }) {
-    const { renderedMovies, showMoreMovies, renderButton } = useMoviesCardsRender(moviesList);
+function Movies() {
+    const { result, loading, error } = useSelector(state => state.movies);
+    const { movies } = useSelector(state => state.userMovies);
+    const { renderedMovies, showMoreMovies, renderButton } = useMoviesCardsRender(result);
+    const dispatch = useDispatch();
+
+    // API fetch
+
+    useEffect(() => {
+        dispatch(fetchMovies());
+        dispatch(fetchUserMovies());
+    }, [dispatch]);
+
+    // save and delete cards handlers
+
+    function handleMovieSave(movieData) {
+        dispatch(saveUserMovie(movieData));
+    }
+
+    function handleMovieDelete(id) {
+        dispatch(deleteUserMovie(id));
+    }
 
     return (
         <section className='movies'>
-            {isLoading && <Preloader />}
-            {(!isLoading && renderedMovies.length > 0) &&
+            {loading && <Preloader />}
+            {(!loading && renderedMovies.length > 0) &&
                 <>
                     <MoviesList
                         moviesList={renderedMovies}
-                        userMoviesList={userMoviesList}
+                        userMoviesList={movies}
                         handleMovieSave={handleMovieSave}
                         handleMovieDelete={handleMovieDelete}
                     />
@@ -26,9 +50,9 @@ function Movies({ isLoading, moviesList=[], userMoviesList=[], errorMessage, han
                     }
                 </>
             }
-            {(moviesList.length === 0 && errorMessage) &&
+            {(result.length === 0 && error) &&
                 <ErrorMessage
-                    text={errorMessage}
+                    text={error}
                     place='movies'
                 />
             }

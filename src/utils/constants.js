@@ -50,4 +50,6 @@ export const ERROR_NO_USER_MOVIES = 'Нет сохраненных фильмо�
 
 export const BASE_URL_MOVIES = 'https://api.nomoreparties.co';
 
-export const BASE_URL_MAIN = 'https://api.nameless.nomoredomains.rocks';
+// export const BASE_URL_MAIN = 'http://movies-explorer-api-production-f471.up.railway.app';
+
+export const BASE_URL_MAIN = 'http://localhost:3000';

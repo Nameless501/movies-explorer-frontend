@@ -1,21 +1,39 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserMovies, deleteUserMovie } from '../../../store/userMovies/userMoviesSlice';
 import Preloader from '../../UI/Preloader/Preloader';
 import UserMoviesList from '../../components/UserMoviesList/UserMoviesList';
 import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 import './SavedMovies.css';
 
-function SavedMovies({ isLoading, moviesList=[], errorMessage, handleMovieDelete }) {
+function SavedMovies() {
+    const { result, loading, error } = useSelector(state => state.userMovies);
+    const dispatch = useDispatch();
+
+    // API fetch
+
+    useEffect(() => {
+        dispatch(fetchUserMovies());
+    }, [dispatch]);
+
+    // delete cards handler
+
+    function handleMovieDelete(id) {
+        dispatch(deleteUserMovie(id));
+    };
+
     return (
         <section className='saved-movies'>
-            {isLoading && <Preloader />}
-            {(!isLoading && moviesList.length > 0) &&
+            {loading && <Preloader />}
+            {(!loading && result.length > 0) &&
                 <UserMoviesList
-                    moviesList={moviesList}
+                    moviesList={result}
                     handleMovieDelete={handleMovieDelete}
                 />
             }
-            {(moviesList.length === 0 && errorMessage) &&
+            {(result.length === 0 && error) &&
                 <ErrorMessage
-                    text={errorMessage}
+                    text={error}
                     place='movies'
                 />
             }

@@ -1,7 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
 import { routesConfig } from '../../utils/configs';
 import { CurrentUserProvider } from '../../contexts/UserContext';
-import { UserMoviesProvider } from '../../contexts/UserMoviesContext';
 import ProtectedRoute from '../pages/ProtectedRoute/ProtectedRoute';
 import LandingPage from '../pages/Landing/LandingPage';
 import MoviesPage from '../pages/Movies/MoviesPage';
@@ -20,14 +19,10 @@ function App() {
                         <LandingPage />
                     </Route>
                     <ProtectedRoute path={routesConfig.movies}>
-                        <UserMoviesProvider>
-                            <MoviesPage />
-                        </UserMoviesProvider>
+                        <MoviesPage />
                     </ProtectedRoute>
                     <ProtectedRoute path={routesConfig.savedMovies}>
-                        <UserMoviesProvider>
-                            <SavedMoviesPage />
-                        </UserMoviesProvider>
+                        <SavedMoviesPage />
                     </ProtectedRoute>
                     <ProtectedRoute path={routesConfig.profile}>
                         <ProfilePage />
